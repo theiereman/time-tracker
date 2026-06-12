@@ -1,0 +1,7 @@
+- content_for :title, "Sign in"
+
+= form_with url: session_path, method: :post, class: "flex flex-col gap-2 mx-auto" do |form|
+  .flex.flex-col
+    = form.label :email_address, "Adresse e-mail"
+    = form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", placeholder: "you@example.com"
+  = form.submit "Recevoir un code de connexion"

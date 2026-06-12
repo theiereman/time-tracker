@@ -1,0 +1,7 @@
+- content_for :title, "Time Tracker"
+%h1 Time Tracker
+%p
+  Signed in as
+  = succeed "." do
+    %strong= Current.user.email_address
+= button_to "Sign out", session_path, method: :delete

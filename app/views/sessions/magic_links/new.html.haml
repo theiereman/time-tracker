@@ -1,0 +1,14 @@
+
+  
+= form_with url: session_magic_link_path, method: :post, class: "flex flex-col gap-6 mx-auto" do |form|
+  
+  %p
+    Un code à 6 chiffres a été envoyé
+    %strong= email_address_pending_authentication
+  .flex.flex-col
+    = form.label :code, "Code"
+    = form.text_field :code, required: true, autofocus: true,autocomplete: "one-time-code", inputmode: "text", maxlength: MagicLink::CODE_LENGTH                      
+  .flex
+    = link_to "Retour à la page de précédente", new_session_path
+    
+    = form.submit "Se connecter"
