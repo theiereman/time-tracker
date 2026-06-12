@@ -1,0 +1,17 @@
+<% content_for :title, "Enter your code" %>
+
+<h1>Enter your code</h1>
+<p>We sent a 6-character code to <strong><%= email_address_pending_authentication %></strong>. It expires in 15 minutes.</p>
+
+<%= form_with url: session_magic_link_path, method: :post do |form| %>
+  <div>
+    <%= form.label :code, "Code" %>
+    <%= form.text_field :code, required: true, autofocus: true,
+          autocomplete: "one-time-code", inputmode: "text",
+          maxlength: MagicLink::CODE_LENGTH %>
+  </div>
+
+  <%= form.submit "Sign in" %>
+<% end %>
+
+<p><%= link_to "Use a different email address", new_session_path %></p>

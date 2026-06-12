@@ -1,0 +1,14 @@
+<% content_for :title, "Sign in" %>
+
+<h1>Sign in to Time Tracker</h1>
+<p>Enter your email address and we'll send you a one-time code.</p>
+
+<%= form_with url: session_path, method: :post do |form| %>
+  <div>
+    <%= form.label :email_address, "Email address" %>
+    <%= form.email_field :email_address, required: true, autofocus: true,
+          autocomplete: "email", placeholder: "you@example.com" %>
+  </div>
+
+  <%= form.submit "Send me a code" %>
+<% end %>
