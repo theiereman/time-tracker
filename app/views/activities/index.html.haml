@@ -1,7 +1,7 @@
 .mb-10
   %h1= l(@day)
   %h2.flex.justify-between
-    %span= "#{@hour}h -> #{@hour + 1}h"
+    %span= "#{@current_datetime.hour}h -> #{@current_datetime.hour + 1}h"
     %span= "#{Current.user.remaining_hours_for(@day)}h restantes"
 .grid.grid-cols-2.gap-4.text-lg
   - @categories.each do |category|
@@ -11,7 +11,7 @@
 
 %h2.mt-10.flex.justify-between Activités de la journée
 .flex.flex-col.gap-2
-  - Current.user.activities.today.order(:started_at).each do |activity|
+  - Current.user.activities.at(@current_datetime.to_date).order(:started_at).each do |activity|
     .flex.mt-2.items-center.py-2
       .font-bold.w-12
         %span #{activity.started_at.hour} h
@@ -20,6 +20,6 @@
   - (Current.user.remaining_activities_for(@day) - 1).times do |i|
     .flex.mt-2.items-center.py-2{class: "text-text/50"}
       .font-bold.w-12
-        %span= "#{@hour + i} h"
+        %span= "#{@current_datetime.hour + i} h"
       .flex.justify-between.text-xl.italic
         %span Non renseigné

@@ -7,9 +7,7 @@ class ActivitiesController < ApplicationController
 
   def create
     @activity = Activity.new(activity_params)
-
-    @activity.started_at = DateTime.new(@day.year, @day.month, @day.day, @hour)
-    @activity.ended_at = @activity.started_at + 1.hour
+    @activity.started_at = @current_datetime
 
     if @activity.save
       redirect_to activities_path
@@ -25,8 +23,8 @@ class ActivitiesController < ApplicationController
   end
 
   def set_time
-    @day = Date.current
-    @hour = Current.user.latest_activity_for(@day)&.ended_at&.hour || Current.user.wake_up_hour
+    @current_datetime = Current.user.next_activity_start_datetime
+    @day = @current_datetime.to_date
   end
 
   def activity_params
