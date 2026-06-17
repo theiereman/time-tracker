@@ -1,8 +1,8 @@
 .mb-10
-  %h1= l(@day)
+  %h1= l(@next_activity_slot.to_date)
   %h2.flex.justify-between
-    %span= "#{@current_datetime.hour}h -> #{@current_datetime.hour + 1}h"
-    %span= "#{Current.user.remaining_hours_for(@day)}h restantes"
+    %span= "#{@next_activity_slot.hour}h -> #{@next_activity_slot.hour + 1}h"
+    
 .grid.grid-cols-2.gap-4.text-lg
   - @categories.each do |category|
     = form_for :activity, url: activities_path, method: :post, class: "border-5", data: { turbo_frame: "_top" } do |form|
@@ -10,16 +10,11 @@
       = form.submit category.label, class: "size-full p-6!"
 
 %h2.mt-10.flex.justify-between Activités de la journée
-.flex.flex-col.gap-2
-  - Current.user.activities.at(@current_datetime.to_date).order(:started_at).each do |activity|
-    .flex.mt-2.items-center.py-2
+%span= "#{@feed.remaining_activities_count} activité(s) restante(s)"
+.columns-2.gap-2
+  - @feed.slots.each do |slot|
+    .flex.mt-2.items-center.py-2.break-inside-avoid{class: ("text-text/50" unless slot.filled?)}
       .font-bold.w-12
-        %span #{activity.started_at.hour} h
-      .flex.justify-between.text-xl.uppercase
-        %span= activity.category.label
-  - (Current.user.remaining_activities_for(@day) - 1).times do |i|
-    .flex.mt-2.items-center.py-2{class: "text-text/50"}
-      .font-bold.w-12
-        %span= "#{@current_datetime.hour + i} h"
-      .flex.justify-between.text-xl.italic
-        %span Non renseigné
+        %span= "#{slot.hour} h"
+      .flex.justify-between.text-xl{class: ("italic" unless slot.filled?)}
+        %span= slot.label
