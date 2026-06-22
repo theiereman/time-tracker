@@ -9,4 +9,8 @@ class User < ApplicationRecord
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   after_create -> { Activity::Category.create_default_categories_for(self) }
+
+  def last_activity
+    activities.order(started_at: :desc).first
+  end
 end

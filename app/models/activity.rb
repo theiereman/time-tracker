@@ -9,6 +9,7 @@ class Activity < ApplicationRecord
   validates :user, presence: true
   validates :started_at, :category, presence: true
   validate :unique_on_timespan_for_user, on: :create
+  validate :present_or_past
 
   scope :today, -> { where(started_at: Time.current.beginning_of_day..Time.current.end_of_day) }
   scope :at, ->(date) { where(started_at: date.beginning_of_day..date.end_of_day) }
@@ -28,5 +29,11 @@ class Activity < ApplicationRecord
     return unless user.activities.where(started_at: started_at...end_timedate).any?
 
     errors.add(:base, "Une activité exsite déjà pour cette période.")
+  end
+
+  def present_or_past
+    return if started_at.to_date <= Date.current
+
+    errors.add(:started_at, "ne peut être dans le futur.")
   end
 end

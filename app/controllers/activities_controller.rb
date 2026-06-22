@@ -28,7 +28,7 @@ class ActivitiesController < ApplicationController
   def get_most_accurate_activity_datetime
     params.dig(:activity, :started_at) ||
     params[:datetime] ||
-    Current.user.activities.where(started_at: Date.current.beginning_of_day..Date.current.end_of_day).last&.ended_at ||
+    Current.user.last_activity&.ended_at||
     @schedule.first_datetime_of_day
   end
 
