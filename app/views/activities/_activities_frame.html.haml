@@ -15,7 +15,7 @@
 %span= @feed.remaining_activities_count > 0 ? "#{@feed.remaining_activities_count} activité(s) à renseigner" : "Toutes les activités du jour ont été renseignées"
 .md:columns-2.gap-2
   - @feed.slots.each do |slot|
-    .flex.gap-6.justify-between.p-4.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"bg-blue-950/90 text-white" if slot.night} #{"bg-primary text-text!" if slot.hour == @activity.started_at.hour}"}
+    .flex.gap-6.justify-between.p-4.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"bg-night/90 text-white" if slot.night} #{"bg-primary text-text!" if slot.hour == @activity.started_at.hour}"}
       .font-bold.text-nowrap.flex.gap-2
         %span= "#{slot.hour} h"
         - if slot.night
