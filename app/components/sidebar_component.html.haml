@@ -1,8 +1,8 @@
-#sidebar.flex.flex-col.justify-between.border-r-5.h-full{data: { turbo_permanent: "true" }}
+#sidebar.flex.flex-col.justify-between.border-r-5.h-full
   %div 
     = render NavbarEntryComponent.new(path: root_path, icon: "layout-dashboard")
     = render NavbarEntryComponent.new(path: "#", icon: "calendar")
     = render NavbarEntryComponent.new(path: "#", icon: "chart-column-big")
-    = render NavbarEntryComponent.new(path: "#", icon: "settings")
-  = link_to root_path, class: "w-full flex justify-center" do
+    = render NavbarEntryComponent.new(path: settings_path, icon: "settings")
+  %div
     = render NavbarEntryComponent.new(path: "#", icon: "circle-user-round")

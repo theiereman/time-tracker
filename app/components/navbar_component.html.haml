@@ -1,5 +1,5 @@
-#mobile-navbar.flex.justify-between.border-5.rounded-sm.m-2{data: { turbo_permanent: "true" }}
+#mobile-navbar.flex.justify-between.border-5.rounded-sm.m-2
   = render NavbarEntryComponent.new(path: root_path, icon: "layout-dashboard")
   = render NavbarEntryComponent.new(path: "#", icon: "calendar")
   = render NavbarEntryComponent.new(path: "#", icon: "chart-column-big")
-  = render NavbarEntryComponent.new(path: "#", icon: "settings")
+  = render NavbarEntryComponent.new(path: settings_path, icon: "settings")

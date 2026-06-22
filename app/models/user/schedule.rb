@@ -5,15 +5,15 @@ class User::Schedule
     @user = user
   end
 
-  def wake_up_hour = 7 # TODO: make this alterable in user app settings
-  def sleep_hour = 23 # TODO: make this alterable in user app settings
+  delegate :wake_up_hour, to: :@user
+  delegate :sleep_hour, to: :@user
 
   def sleep_duration_in_hours
     HOURS_IN_A_DAY - awake_duration_in_hours
   end
 
   def awake_duration_in_hours
-    sleep_hour - wake_up_hour
+    @user.sleep_hour - @user.wake_up_hour
   end
 
   def number_of_activities_in_a_day

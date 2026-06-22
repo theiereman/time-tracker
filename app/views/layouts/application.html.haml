@@ -19,7 +19,7 @@
   %body.h-screen.flex.flex-col.md:flex-row
     = flash_toasts
     .hidden.md:block= render SidebarComponent.new
-    .w-full.overflow-y-scroll
+    .w-full.overflow-y-scroll.flex-1
       .m-6
         = yield
     .md:hidden= render NavbarComponent.new

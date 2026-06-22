@@ -5,7 +5,7 @@
     
 .grid.grid-cols-2.gap-4.text-lg
   - @categories.each do |category|
-    = form_for :activity, url: activities_path, method: :post, class: "border-5", data: { turbo_frame: "_top" } do |form|
+    = form_for :activity, url: activities_path, method: :post, class: "border-5" do |form|
       = form.hidden_field :activity_category_id, value: category.id
       = form.submit category.label, class: "size-full p-6!"
 

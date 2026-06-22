@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   include User::MagicLinkable
+  include User::Setupable
 
-  has_many :sessions, dependent: :destroy
   has_many :activity_categories, class_name: "Activity::Category", dependent: :destroy
   has_many :activities, through: :activity_categories
 

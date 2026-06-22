@@ -1,0 +1,10 @@
+-# locals: (user:)
+
+= form_with model: @user, url: setting_path(@user), method: :patch, class: "space-y-6 mt-12" do |f|
+  .flex.items-center.gap-2
+    = f.label "Heure de réveil"
+    = f.text_field :wake_up_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}
+
+  .flex.items-center.gap-2    
+    = f.label "Heure de coucher"
+    = f.text_field :sleep_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}

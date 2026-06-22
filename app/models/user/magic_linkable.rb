@@ -2,6 +2,7 @@ module User::MagicLinkable
   extend ActiveSupport::Concern
 
   included do
+    has_many :sessions, dependent: :destroy
     has_many :magic_links, dependent: :destroy
 
     def send_magic_link(**attributes)
