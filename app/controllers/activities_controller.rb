@@ -2,8 +2,8 @@ class ActivitiesController < ApplicationController
   before_action :set_variables
 
   def index
-    @feed = ProgressPresenter.new(User::Progress.for_the_day(Current.user, @schedule))
     @date = @activity.started_at.to_date
+    @feed = ProgressPresenter.new(User::Progress.for_the_day(Current.user, @schedule, @date))
   end
 
   def create
