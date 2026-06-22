@@ -7,7 +7,7 @@ class Activity < ApplicationRecord
   has_one :user, through: :category, validate: true
 
   validates :started_at, :category, presence: true
-  validate :unique_on_timespan_for_user
+  validate :unique_on_timespan_for_user, on: :create
 
   scope :today, -> { where(started_at: Time.current.beginning_of_day..Time.current.end_of_day) }
   scope :at, ->(date) { where(started_at: date.beginning_of_day..date.end_of_day) }

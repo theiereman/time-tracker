@@ -1,20 +1,2 @@
-.mb-10
-  %h1= l(@next_activity_slot.to_date)
-  %h2.flex.justify-between
-    %span= "#{@next_activity_slot.hour}h -> #{@next_activity_slot.hour + 1}h"
-    
-.grid.grid-cols-2.gap-4.text-lg
-  - @categories.each do |category|
-    = form_for :activity, url: activities_path, method: :post, class: "border-5" do |form|
-      = form.hidden_field :activity_category_id, value: category.id
-      = form.submit category.label, class: "size-full p-6!"
-
-%h2.mt-10.flex.justify-between Activités de la journée
-%span= "#{@feed.remaining_activities_count} activité(s) restante(s)"
-.columns-2.gap-2
-  - @feed.slots.each do |slot|
-    .flex.mt-2.items-center.py-2.break-inside-avoid{class: ("text-text/50" unless slot.filled?)}
-      .font-bold.w-12
-        %span= "#{slot.hour} h"
-      .flex.justify-between.text-xl{class: ("italic" unless slot.filled?)}
-        %span= slot.label
+= turbo_frame_tag :activities do
+  = render partial: "activities_frame"
