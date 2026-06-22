@@ -1,8 +1,8 @@
 class MonthlyCalendar
   attr_reader :month, :days
 
-  def initialize(activities_progress, month)
-    @activities_progress = activities_progress
+  def initialize(progress, month)
+    @progress = progress
     @month = month
     init_days
   end
@@ -16,14 +16,14 @@ class MonthlyCalendar
   end
 
   def activities
-    @activities_progress.activities
+    @progress.activities
   end
 
   def init_days
     @days = []
     days_count_for_month.times do |i|
       date = Date.new(Date.current.year, @month, i+1)
-      @days << Calendar::Day.new(date, @activities_progress.all_activities_done?(date:))
+      @days << Calendar::Day.new(date, @progress.all_activities_done?(date:))
     end
   end
 end

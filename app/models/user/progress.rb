@@ -18,10 +18,10 @@ class User::Progress
   end
 
   def all_activities_done?(date: nil)
-    return activities.size == number_of_activities_in_a_day if date.nil?
+    return activities.size >= number_of_activities_in_a_day if date.nil?
     return false if activities_per_day[date].nil?
 
-    activities_per_day[date].count == number_of_activities_in_a_day
+    activities_per_day[date].count >= number_of_activities_in_a_day
   end
 
   def remaining_activities_count
