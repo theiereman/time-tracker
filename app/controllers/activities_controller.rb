@@ -25,10 +25,15 @@ class ActivitiesController < ApplicationController
   end
 
   def get_most_accurate_activity_datetime
-    params.dig(:activity, :started_at) ||
+    date = params.dig(:activity, :started_at) ||
     params[:datetime] ||
+    !params[:date].nil? && Current.user.wake_up_datetime(date: params[:date].to_date) ||
     Current.user.last_activity&.ended_at||
-    Current.user.first_datetime_of_day
+    Current.user.wake_up_datetime(date: Date.current)
+
+    redirect_back fallback_location: root_path and return if date.to_date > Date.current
+
+    date
   end
 
   def activity_params

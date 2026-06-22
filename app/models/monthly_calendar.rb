@@ -23,7 +23,7 @@ class MonthlyCalendar
     @days = []
     days_count_for_month.times do |i|
       date = Date.new(Date.current.year, @month, i+1)
-      @days << Day.new(date, @progress.all_activities_done?(date:), @progress.number_of_activities_in_a_day, @progress.remaining_activities_count(date:))
+      @days << Day.new(date, @progress.all_activities_done?(date:), Activity.number_of_activities_in_a_day, @progress.remaining_activities_count(date:))
     end
   end
 end

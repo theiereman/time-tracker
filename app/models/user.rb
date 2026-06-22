@@ -14,8 +14,7 @@ class User < ApplicationRecord
     activities.order(started_at: :desc).first
   end
 
-  def first_datetime_of_day
-    current_date = Date.current
-    DateTime.new(current_date.year, current_date.month, current_date.day, wake_up_hour)
+  def wake_up_datetime(date: Date.current)
+    DateTime.new(date.year, date.month, date.day, wake_up_hour)
   end
 end

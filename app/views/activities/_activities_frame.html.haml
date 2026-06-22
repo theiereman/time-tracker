@@ -1,9 +1,24 @@
-.mb-10
-  %h1= l(@date)
-  %h2.flex.justify-between
-    %span= "#{@activity.started_at.hour}h -> #{@activity.ended_at.hour}h"
+.flex.justify-between.items-start
+  .mb-10
+    %h1= l(@date)
+    %h2.flex.justify-between
+      %span= "#{@activity.started_at.hour}h -> #{@activity.ended_at.hour}h"
 
-  
+  .flex.justify-between.mb-12.border-3.items-center
+    .flex.gap-1
+      = link_to activities_path(date: @activity.started_at.to_date - 1.week), class: "tooltip py-4!" do 
+        = lucide_icon "chevrons-left"
+        %span.tooltiptext Semaine précédente
+      = link_to activities_path(date: @activity.started_at.to_date - 1.day), class: "tooltip py-4!" do 
+        = lucide_icon "chevron-left"
+        %span.tooltiptext Jour précédent
+    .flex.gap-1
+      = link_to activities_path(date: @activity.started_at.to_date + 1.day), class: "tooltip py-4! #{'disabled' if @activity.started_at.to_date + 1.day > Date.current}" do 
+        = lucide_icon "chevron-right"
+        %span.tooltiptext Jour suivant
+      = link_to activities_path(date: @activity.started_at.to_date + 1.week), class: "tooltip py-4! #{'disabled' if @activity.started_at.to_date + 1.week > Date.current}" do 
+        = lucide_icon "chevrons-right"
+        %span.tooltiptext Semaine suivante
 
 .space-y-6
   .grid.grid-cols-2.gap-4.text-lg
