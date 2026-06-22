@@ -13,4 +13,21 @@ class User < ApplicationRecord
   def last_activity
     activities.order(started_at: :desc).first
   end
+
+  def first_datetime_of_day
+    current_date = Date.current
+    DateTime.new(current_date.year, current_date.month, current_date.day, wake_up_hour)
+  end
+
+  def sleep_duration_in_hours
+    HOURS_IN_A_DAY - awake_duration_in_hours
+  end
+
+  def awake_duration_in_hours
+    sleep_hour - wake_up_hour
+  end
+
+  def number_of_activities_in_a_day
+    Activity::HOURS_IN_A_DAY / Activity::DURATION_IN_HOURS
+  end
 end

@@ -1,4 +1,5 @@
 class Activity < ApplicationRecord
+  HOURS_IN_A_DAY = 24
   DURATION_IN_HOURS = 1
 
   after_initialize :defaults

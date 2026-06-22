@@ -3,6 +3,8 @@
   %h2.flex.justify-between
     %span= "#{@activity.started_at.hour}h -> #{@activity.ended_at.hour}h"
 
+  
+
 .space-y-6
   .grid.grid-cols-2.gap-4.text-lg
     - @categories.each do |category|

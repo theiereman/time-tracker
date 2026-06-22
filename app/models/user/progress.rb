@@ -1,20 +1,19 @@
 class User::Progress
-  attr_reader :user, :activities, :schedule
+  attr_reader :user, :activities
 
-  delegate :number_of_activities_in_a_day, to: :schedule
+  delegate :number_of_activities_in_a_day, to: :user
 
-  private def initialize(user, schedule, range)
+  private def initialize(user, range)
     @user = user
-    @schedule = schedule
     @range = range
   end
 
-  def self.for_the_day(user, schedule, date = Date.current)
-    new(user, schedule, date.beginning_of_day..date.end_of_day)
+  def self.for_the_day(user, date = Date.current)
+    new(user, date.beginning_of_day..date.end_of_day)
   end
 
-  def self.for_the_month(user, schedule, date = Date.current)
-    new(user, schedule, date.beginning_of_month..date.end_of_month)
+  def self.for_the_month(user, date = Date.current)
+    new(user, date.beginning_of_month..date.end_of_month)
   end
 
   def all_activities_done?(date: nil)

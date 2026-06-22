@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @date = @activity.started_at.to_date
-    @feed = ProgressPresenter.new(User::Progress.for_the_day(Current.user, @schedule, @date))
+    @feed = ProgressPresenter.new(User::Progress.for_the_day(Current.user, @date))
   end
 
   def create
@@ -19,7 +19,6 @@ class ActivitiesController < ApplicationController
   private
 
   def set_variables
-    @schedule = User::Schedule.new(Current.user)
     datetime = get_most_accurate_activity_datetime
     @activity = Current.user.activities.find_by(started_at: datetime) || Current.user.activities.build(started_at: datetime)
     @categories = Current.user.activity_categories
@@ -29,7 +28,7 @@ class ActivitiesController < ApplicationController
     params.dig(:activity, :started_at) ||
     params[:datetime] ||
     Current.user.last_activity&.ended_at||
-    @schedule.first_datetime_of_day
+    Current.user.first_datetime_of_day
   end
 
   def activity_params
