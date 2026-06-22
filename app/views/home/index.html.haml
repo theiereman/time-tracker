@@ -1,6 +1,0 @@
-.flex.flex-col.gap-4.w-full
-  %h3 Dernières activités
-  = turbo_frame_tag "activities", src: activities_path, refresh: "morph"
-  %div.flex.gap-4
-    = link_to "Ajouter une activité", new_activity_path
-    = link_to "Voir toutes les activités", activities_path
