@@ -1,0 +1,10 @@
+.flex.gap-2.w-full.justify-between.items-center
+  = link_to "#" do
+    = lucide_icon "arrow-left"
+  = l(Date.new(1900, @calendar.month, 1), format: "%B")
+  = link_to "#" do
+    = lucide_icon "arrow-right"
+
+.grid.grid-cols-7.gap-1.max-w-md.mx-auto.mt-6
+  - @calendar.days.each do |day|
+    = render "day", day: day

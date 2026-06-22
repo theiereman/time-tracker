@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   resources :settings, only: %i[ index update ]
 
+  resource :calendar, only: :show
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   root "activities#index"

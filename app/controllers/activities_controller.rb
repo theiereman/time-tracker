@@ -30,7 +30,7 @@ class ActivitiesController < ApplicationController
   end
 
   def set_feed
-    @feed = DayProgressPresenter.new(User::DayProgress.new(Current.user, @schedule))
+    @feed = ActivitiesProgressPresenter.new(User::ActivitiesProgress.for_the_day(Current.user, @schedule))
     @activity_slot = params[:datetime]&.to_datetime || User::ActivitySlot.new(Current.user.activities, @schedule).get_next
     @date = @activity_slot.to_date
   end

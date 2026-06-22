@@ -1,0 +1,5 @@
+-# locals: (day:)
+
+= link_to activities_path(datetime: day.date.to_datetime), class:"flex items-center gap-1 border-2 border-text p-1! #{"bg-custom-green" if day.completed?}" do
+  = day.date.day
+  = lucide_icon :check,class: "size-4" if day.completed?

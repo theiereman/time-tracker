@@ -1,7 +1,7 @@
 #sidebar.flex.flex-col.justify-between.border-r-5.h-full
   %div 
     = render NavbarEntryComponent.new(path: root_path, icon: "layout-dashboard")
-    = render NavbarEntryComponent.new(path: "#", icon: "calendar")
+    = render NavbarEntryComponent.new(path: calendar_path, icon: "calendar")
     = render NavbarEntryComponent.new(path: "#", icon: "chart-column-big")
     = render NavbarEntryComponent.new(path: settings_path, icon: "settings")
   %div
