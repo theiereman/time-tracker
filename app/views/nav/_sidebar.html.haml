@@ -1,0 +1,8 @@
+#sidebar.flex.flex-col.justify-between.border-r-5.h-full
+  %div
+    = render "nav/item",path: root_path, icon: "layout-dashboard"
+    = render "nav/item",path: calendar_path, icon: "calendar"
+    = render "nav/item",path: "#", icon: "chart-column-big"
+    = render "nav/item",path: settings_path, icon: "settings"
+  %div
+    = render "nav/item",path: "#", icon: "circle-user-round"

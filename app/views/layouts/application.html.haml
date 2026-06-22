@@ -18,8 +18,8 @@
     = javascript_importmap_tags
   %body.h-screen.flex.flex-col.md:flex-row
     = flash_toasts
-    .hidden.md:block= render SidebarComponent.new
+    .hidden.md:block= render "nav/sidebar"
     .w-full.overflow-y-scroll.flex-1
       .m-6
         = yield
-    .md:hidden= render NavbarComponent.new
+    .md:hidden= render "nav/navbar"
