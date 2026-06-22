@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_22_090343) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_22_164353) do
   create_table "activities", force: :cascade do |t|
     t.datetime "started_at"
     t.datetime "ended_at"
     t.integer "activity_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["activity_category_id"], name: "index_activities_on_activity_category_id"
+    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "activity_categories", force: :cascade do |t|
@@ -59,6 +61,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_22_090343) do
   end
 
   add_foreign_key "activities", "activity_categories"
+  add_foreign_key "activities", "users"
   add_foreign_key "activity_categories", "users"
   add_foreign_key "magic_links", "users"
   add_foreign_key "sessions", "users"

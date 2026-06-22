@@ -1,4 +1,4 @@
-class User::ActivitiesProgress
+class User::Progress
   attr_reader :user, :activities, :schedule
 
   delegate :number_of_activities_in_a_day, to: :schedule

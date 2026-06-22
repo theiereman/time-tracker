@@ -1,21 +1,21 @@
 .mb-10
   %h1= l(@date)
   %h2.flex.justify-between
-    %span= "#{@activity_slot.hour}h -> #{@activity_slot.hour + 1}h"
+    %span= "#{@activity.started_at.hour}h -> #{@activity.ended_at.hour}h"
     
 .grid.grid-cols-2.gap-4.text-lg
   - @categories.each do |category|
     = form_for :activity, url: activities_path, method: :post, class: "border-5" do |form|
-      = form.hidden_field :activity_category_id, value: category.id
-      = form.hidden_field :started_at, value: @activity_slot.iso8601
       = form.hidden_field :id, value: @activity&.id
+      = form.hidden_field :activity_category_id, value: category.id
+      = form.hidden_field :started_at, value: @activity.started_at
       = form.submit category.label, class: "size-full p-6!"
 
 %h2.mt-10.flex.justify-between Activités de la journée
 %span= @feed.remaining_activities_count > 0 ? "#{@feed.remaining_activities_count} activité(s) à renseigner" : "Toutes les activités du jour ont été renseignées"
 .md:columns-2.gap-2
   - @feed.slots.each do |slot|
-    .flex.gap-6.justify-between.p-4.mt-2.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"bg-primary" if slot.hour == @activity_slot.hour}"}
+    .flex.gap-6.justify-between.p-4.mt-2.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"bg-primary" if slot.hour == @activity.started_at.hour}"}
       .font-bold.text-nowrap
         %span= "#{slot.hour} h"
       .flex.justify-between.text-xl{class: ("italic" unless slot.filled?)}

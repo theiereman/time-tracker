@@ -8,6 +8,11 @@ class User::Schedule
   delegate :wake_up_hour, to: :@user
   delegate :sleep_hour, to: :@user
 
+  def first_datetime_of_day
+    current_date = Date.current
+    DateTime.new(current_date.year, current_date.month, current_date.day, wake_up_hour)
+  end
+
   def sleep_duration_in_hours
     HOURS_IN_A_DAY - awake_duration_in_hours
   end

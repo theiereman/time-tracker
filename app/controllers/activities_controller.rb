@@ -1,19 +1,16 @@
 class ActivitiesController < ApplicationController
-  before_action :set_schedule
-  before_action :set_categories, only: :index
+  before_action :set_variables
 
   def index
-    @activity = Activity.find_by(id: params[:activity_id])
-    set_feed
+    @feed = ProgressPresenter.new(User::Progress.for_the_day(Current.user, @schedule))
+    @date = @activity.started_at.to_date
   end
 
-
   def create
-    @activity = Current.user.activities.find_by(id: activity_params[:id]) || Activity.new
     @activity.attributes = activity_params
 
     if @activity.save
-      redirect_to activities_path
+      redirect_to activities_path(datetime: @activity.ended_at)
     else
       render turbo_stream: helpers.turbo_flash_toast(:alert, @activity.errors.full_messages.first)
     end
@@ -21,18 +18,18 @@ class ActivitiesController < ApplicationController
 
   private
 
-  def set_categories
+  def set_variables
+    @schedule = User::Schedule.new(Current.user)
+    datetime = get_most_accurate_activity_datetime
+    @activity = Current.user.activities.find_by(started_at: datetime) || Current.user.activities.build(started_at: datetime)
     @categories = Current.user.activity_categories
   end
 
-  def set_schedule
-    @schedule = User::Schedule.new(Current.user)
-  end
-
-  def set_feed
-    @feed = ActivitiesProgressPresenter.new(User::ActivitiesProgress.for_the_day(Current.user, @schedule))
-    @activity_slot = params[:datetime]&.to_datetime || User::ActivitySlot.new(Current.user.activities, @schedule).get_next
-    @date = @activity_slot.to_date
+  def get_most_accurate_activity_datetime
+    params.dig(:activity, :started_at) ||
+    params[:datetime] ||
+    Current.user.activities.where(started_at: Date.current.beginning_of_day..Date.current.end_of_day).last&.ended_at ||
+    @schedule.first_datetime_of_day
   end
 
   def activity_params

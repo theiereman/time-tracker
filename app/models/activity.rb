@@ -1,11 +1,12 @@
 class Activity < ApplicationRecord
   DURATION_IN_HOURS = 1
 
-  before_validation :defaults
+  after_initialize :defaults
 
   belongs_to :category, class_name: "Activity::Category", foreign_key: "activity_category_id"
-  has_one :user, through: :category, validate: true
+  belongs_to :user
 
+  validates :user, presence: true
   validates :started_at, :category, presence: true
   validate :unique_on_timespan_for_user, on: :create
 
