@@ -420,6 +420,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  dotenv
   haml-rails
   hotwire-spark
   html2haml

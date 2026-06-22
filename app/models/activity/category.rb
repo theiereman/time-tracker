@@ -13,7 +13,7 @@ class Activity::Category < ApplicationRecord
     ]
 
     default_categories.each do |category_attrs|
-      user.activity_categories.create(category_attrs)
+      user.activity_categories.create!(category_attrs)
     end
   end
 end
