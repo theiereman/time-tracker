@@ -1,26 +1,29 @@
-.flex.justify-between.items-start
-  .mb-10
+.flex.justify-between.items-start.mb-10
+  #timestamp
     %h1= l(@date)
     %h2.flex.justify-between
       %span= "#{@activity.started_at.hour}h -> #{@activity.ended_at.hour}h"
 
-  .flex.justify-between.mb-12.border-3.items-center
-    .flex.gap-1
-      = link_to activities_path(date: @activity.started_at.to_date - 1.week), class: "tooltip py-4!" do 
-        = lucide_icon "chevrons-left"
-        %span.tooltiptext Semaine précédente
-      = link_to activities_path(date: @activity.started_at.to_date - 1.day), class: "tooltip py-4!" do 
-        = lucide_icon "chevron-left"
-        %span.tooltiptext Jour précédent
-    .flex.gap-1
-      = link_to activities_path(date: @activity.started_at.to_date + 1.day), class: "tooltip py-4! #{'disabled' if @activity.started_at.to_date + 1.day > Date.current}" do 
-        = lucide_icon "chevron-right"
-        %span.tooltiptext Jour suivant
-      = link_to activities_path(date: @activity.started_at.to_date + 1.week), class: "tooltip py-4! #{'disabled' if @activity.started_at.to_date + 1.week > Date.current}" do 
-        = lucide_icon "chevrons-right"
-        %span.tooltiptext Semaine suivante
+  #quick-actions.flex.flex-col
+    .flex.justify-between.border-3.items-center
+      .flex.gap-1
+        = link_to activities_path(date: @activity.started_at.to_date - 1.week), class: "tooltip py-4!" do 
+          = lucide_icon "chevrons-left"
+          %span.tooltiptext Semaine précédente
+        = link_to activities_path(date: @activity.started_at.to_date - 1.day), class: "tooltip py-4!" do 
+          = lucide_icon "chevron-left"
+          %span.tooltiptext Jour précédent
+      .flex.gap-1
+        = link_to activities_path(date: @activity.started_at.to_date + 1.day), class: "tooltip py-4! #{'disabled' if @activity.started_at.to_date + 1.day > Date.current}" do 
+          = lucide_icon "chevron-right"
+          %span.tooltiptext Jour suivant
+        = link_to activities_path(date: @activity.started_at.to_date + 1.week), class: "tooltip py-4! #{'disabled' if @activity.started_at.to_date + 1.week > Date.current}" do 
+          = lucide_icon "chevrons-right"
+          %span.tooltiptext Semaine suivante
+    
+    = button_to "Marquer la nuit comme 'sommeil'", mark_night_as_sleep_path(date: @date)
 
-.space-y-6
+#categories.space-y-6
   .grid.grid-cols-2.gap-4.text-lg
     - @categories.each do |category|
       = form_for :activity, url: activities_path, method: :post, class: "border-5" do |form|
@@ -33,7 +36,7 @@
     %h2.mt-10.flex.justify-between Activités de la journée
     %span= @feed.remaining_activities_count(date: @date) > 0 ? "#{@feed.remaining_activities_count(date: @date)} activité(s) à renseigner" : "Toutes les activités du jour ont été renseignées"
 
-  .md:columns-2.gap-2
+  #activities.md:columns-2.gap-2
     - @feed.slots.each do |slot|
       .flex.gap-6.justify-between.p-4.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"bg-night/90 text-white" if slot.night} #{"bg-primary text-text!" if slot.hour == @activity.started_at.hour}"}
         .font-bold.text-nowrap.flex.gap-2

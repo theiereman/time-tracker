@@ -2,6 +2,10 @@ class Activity::Category < ApplicationRecord
   belongs_to :user
   has_many :activities, foreign_key: "activity_category_id", dependent: :restrict_with_error
 
+  scope :sleep, -> { where(label: "Sommeil").first }
+
+  before_destroy -> { throw(:abort) if protected }
+
   def self.create_default_categories_for(user)
     default_categories = [
       { label: "Lecture" },

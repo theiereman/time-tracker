@@ -12,6 +12,14 @@ module User::Setupable
     def wake_up_hour = super.to_i
     def sleep_hour = super.to_i
 
+    def night?(hour)
+      hour > sleep_hour || hour < wake_up_hour
+    end
+
+    def sleep_hours
+      24.times.select { night?(it) }
+    end
+
     private
 
     def set_default_values
