@@ -2,6 +2,7 @@ class ActivitiesController < ApplicationController
   before_action :set_variables, except: [ :mark_night_as_sleep ]
 
   def index
+    view_context.content_for :title, "Test"
     @date = @activity.started_at.to_date
     @feed = ProgressPresenter.new(User::Progress.for_the_day(Current.user, @date))
   end
