@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   after_create -> { Activity::Category.create_default_categories_for(self) }
 
+  accepts_nested_attributes_for :activity_categories
+
   def last_activity
     activities.order(started_at: :desc).first
   end

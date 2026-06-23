@@ -2,7 +2,7 @@ class Activity::CategoriesController < ApplicationController
   before_action :set_activity_category, only: %i[ show edit update destroy ]
 
   def index
-    @activity_categories = Activity::Category.all
+    @activity_categories = Current.user.activity_categories
   end
 
   def show
@@ -16,46 +16,37 @@ class Activity::CategoriesController < ApplicationController
   end
 
   def create
-    @activity_category = Activity::Category.new(activity_category_params)
+    @activity_category = Current.user.activity_categories.new(activity_category_params)
 
-    respond_to do |format|
-      if @activity_category.save
-        format.html { redirect_to @activity_category, notice: "Category was successfully created." }
-        format.json { render :show, status: :created, location: @activity_category }
-      else
-        format.html { render :new, status: :unprocessable_content }
-        format.json { render json: @activity_category.errors, status: :unprocessable_content }
-      end
+    if @activity_category.save
+      redirect_to settings_path, notice: "Catégorie créée"
+    else
+      redirect_to settings_path, alert: @activity_category.errors.full_messages.first
     end
   end
 
   def update
-    respond_to do |format|
-      if @activity_category.update(activity_category_params)
-        format.html { redirect_to @activity_category, notice: "Category was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @activity_category }
-      else
-        format.html { render :edit, status: :unprocessable_content }
-        format.json { render json: @activity_category.errors, status: :unprocessable_content }
-      end
+    if @activity_category.update(activity_category_params)
+      redirect_to settings_path
+    else
+      redirect_to settings_path, alert: @activity_category.errors.full_messages.first
     end
   end
 
   def destroy
     @activity_category.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to activity_categories_path, notice: "Category was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
-    end
+    redirect_to settings_path, notice: "Catégorie supprimée"
+  rescue ActiveRecord::RecordNotDestroyed
+    redirect_to settings_path, alert: "Impossible de supprimer cette catégorie"
   end
 
   private
-    def set_activity_category
-      @activity_category = Activity::Category.find(params.expect(:id))
-    end
 
-    def activity_category_params
-      params.expect(activity_category: [ :label, :user_id ])
-    end
+  def set_activity_category
+    @activity_category = Current.user.activity_categories.find(params.expect(:id))
+  end
+
+  def activity_category_params
+    params.expect(activity_category: [ :label ])
+  end
 end

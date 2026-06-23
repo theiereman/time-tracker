@@ -45,6 +45,10 @@ a {
   &.disabled {
     @apply pointer-events-none opacity-50;
   }
+
+  &:disabled {
+    @apply hover:bg-transparent hover:text-gray-200 hover:cursor-default;
+  }
 }
 
 input:not([type="submit"]) {
