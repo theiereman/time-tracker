@@ -3,4 +3,4 @@
     - navigation_items.each do | item |
       = render "nav/item", path: item[:path], icon: item[:icon], additional_path: item[:additional_path]
   %div
-    = render "nav/item",path: "#", icon: "circle-user-round"
+    = render "nav/item",path: account_path, icon: "circle-user-round"

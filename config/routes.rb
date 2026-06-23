@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resource :calendar, only: :show
   resource :statistics, only: :show
   resources :settings, only: %i[ index update ]
+  resource :account, only: :show
 
   get "up" => "rails/health#show", as: :rails_health_check
 
