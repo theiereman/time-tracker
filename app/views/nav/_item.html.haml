@@ -1,6 +1,6 @@
--# locals: (path:, icon:)
+-# locals: (path:, icon:, additional_path: nil)
 
-- active = path == Current.path
+- active = path == Current.path || additional_path == Current.path
 
 = link_to path, class: "w-full flex justify-center #{'active' if active}" do
   = lucide_icon icon, class: "size-10"
