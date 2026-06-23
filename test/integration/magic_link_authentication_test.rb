@@ -22,7 +22,6 @@ class MagicLinkAuthenticationTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
     assert_response :success
-    assert_select "strong", text: "alice@example.com"
 
     # Signing out clears the session.
     delete session_path

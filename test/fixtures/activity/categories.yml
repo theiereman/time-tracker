@@ -3,9 +3,7 @@
 one:
   label: MyString
   user: one
-  activity: one
 
 two:
   label: MyString
   user: two
-  activity: two

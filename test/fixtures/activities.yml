@@ -4,8 +4,10 @@ one:
   started_at: 2026-06-12 17:18:19
   ended_at: 2026-06-12 17:18:19
   user: one
+  category: one
 
 two:
   started_at: 2026-06-12 17:18:19
   ended_at: 2026-06-12 17:18:19
   user: two
+  category: two

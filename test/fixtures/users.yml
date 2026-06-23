@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email_address: user1@example.com
+  name: User One
+  settings: '{"wake_up_hour":7,"sleep_hour":23}'
+
+two:
+  email_address: user2@example.com
+  name: User Two
+  settings: '{"wake_up_hour":7,"sleep_hour":23}'

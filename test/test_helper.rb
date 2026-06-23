@@ -9,7 +9,15 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
+  end
+end
 
-    # Add more helper methods to be used by all tests here...
+module ActionDispatch
+  class IntegrationTest
+    def sign_in(user)
+      post session_url, params: { email_address: user.email_address }
+      code = user.magic_links.last.code
+      post session_magic_link_url, params: { code: code }
+    end
   end
 end
