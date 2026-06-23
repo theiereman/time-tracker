@@ -23,9 +23,13 @@ class ActivitiesController < ApplicationController
       datetime = DateTime.new(@date.year, @date.month, @date.day, h)
       activity = Current.user.activities.find_by(started_at: datetime) || Current.user.activities.build(started_at: datetime)
       activity.category = Current.user.activity_categories.sleep
-      if activity.save
-          @error = true
-      end
+      @error = true unless activity.save
+    end
+
+    if @error
+      render turbo_stream: helpers.turbo_flash_toast(:alert, @activity.errors.full_messages.first)
+    else
+      redirect_to activities_path(date: @date)
     end
   end
 
