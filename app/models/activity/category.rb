@@ -9,12 +9,12 @@ class Activity::Category < ApplicationRecord
 
   def self.create_default_categories_for(user)
     default_categories = [
-      { label: "Lecture" },
-      { label: "Cuisine" },
-      { label: "Loisirs" },
-      { label: "Sorties" },
-      { label: "Travail" },
-      { label: "Sommeil" }
+      { label: "Lecture", color: "#8ff0a4" },
+      { label: "Cuisine", color: "#f66151" },
+      { label: "Loisirs", color: "#f6d32d" },
+      { label: "Sorties", color: "#99c1f1" },
+      { label: "Travail", color: "#dc8add" },
+      { label: "Sommeil", protected: true, color: "#6b7280"  }
     ]
 
     default_categories.each do |category_attrs|
