@@ -1,6 +1,10 @@
 = content_for :title, "Calendrier"
 
-%h1.mb-12 Calendrier
+.flex.flex-col.mb-12
+  %h1 Calendrier
+  - current_hour = DateTime.current.hour
+  - current_minutes = DateTime.current.minute
+  %span= "Prochain jour disponible dans #{23 - current_hour}h#{60-current_minutes} - heure du serveur : #{l(DateTime.current, format: "%Hh%M")}" 
 
 .flex.gap-2.w-full.justify-between.items-center
   = link_to calendar_path(date: @date - 1.month) do
