@@ -5,11 +5,11 @@
 .flex.gap-2.w-full.justify-between.items-center
   = link_to calendar_path(date: @date - 1.month) do
     = lucide_icon "arrow-left"
-  = l(@date, format: "%B %Y")
+  = l(@date, format: "%B %Y", locale: :fr)
   = link_to calendar_path(date: @date + 1.month) do
     = lucide_icon "arrow-right"
 
-.grid.grid-cols-7.gap-1.max-w-md.mx-auto.mt-6
+.grid.grid-cols-7.gap-1.max-w-xl.mx-auto.mt-6
   %p.font-bold.opacity-50 lun
   %p.font-bold.opacity-50 mar
   %p.font-bold.opacity-50 mer
