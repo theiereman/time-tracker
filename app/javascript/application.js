@@ -3,3 +3,10 @@ import "@hotwired/turbo-rails";
 import "controllers";
 import "chartkick";
 import "Chart.bundle";
+
+import { init } from "@plausible-analytics/tracker";
+
+init({
+  domain: "timetracker.dotsncircles.com",
+  endpoint: "https://plausible.dotsncircles.com/api/event",
+});
