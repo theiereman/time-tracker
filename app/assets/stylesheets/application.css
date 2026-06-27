@@ -32,12 +32,16 @@
   animation: flash-toast 4s ease forwards;
 }
 
-@keyframes slide-to-top {
-  to { transform: translateY(-100%); }
+:root {
+  --slide-direction: 1;
 }
 
-@keyframes slide-from-bottom {
-  from { transform: translateY(100%); }
+@keyframes slide-out {
+  to { transform: translateY(calc(-100% * var(--slide-direction))); }
+}
+
+@keyframes slide-in {
+  from { transform: translateY(calc(100% * var(--slide-direction))); }
 }
 
 ::view-transition-old(root) {
@@ -54,9 +58,9 @@
 }
 
 ::view-transition-old(page-content) {
-  animation: slide-to-top 320ms cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  animation: slide-out 320ms cubic-bezier(0.33, 1, 0.68, 1) forwards;
 }
 
 ::view-transition-new(page-content) {
-  animation: slide-from-bottom 320ms cubic-bezier(0.33, 1, 0.68, 1) backwards;
+  animation: slide-in 320ms cubic-bezier(0.33, 1, 0.68, 1) backwards;
 }

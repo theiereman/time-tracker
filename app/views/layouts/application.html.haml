@@ -17,7 +17,7 @@
     %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = javascript_importmap_tags
-  %body.h-screen.flex.flex-col.md:flex-row
+  %body.h-screen.flex.flex-col.md:flex-row{data: {nav_index: current_nav_index}}
     = flash_toasts
     .hidden.md:block= render "nav/sidebar"
     .w-full.overflow-y-scroll.flex-1{style: "view-transition-name: page-content"}

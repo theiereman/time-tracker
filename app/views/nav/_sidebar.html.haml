@@ -1,6 +1,6 @@
 #sidebar.flex.flex-col.justify-between.border-r-5.h-full
   %div
     - navigation_items.each do | item |
-      = render "nav/item", path: item[:path], icon: item[:icon], additional_path: item[:additional_path]
+      = render "nav/item", path: item[:path], icon: item[:icon], additional_path: item[:additional_path], nav_index: item[:nav_index]
   %div
     = render "nav/item",path: account_path, icon: "circle-user-round"
