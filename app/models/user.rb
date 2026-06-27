@@ -17,6 +17,6 @@ class User < ApplicationRecord
   end
 
   def wake_up_datetime(date: Date.current)
-    DateTime.new(date.year, date.month, date.day, wake_up_hour)
+    Time.zone.local(date.year, date.month, date.day, wake_up_hour)
   end
 end

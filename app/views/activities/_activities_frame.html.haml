@@ -51,7 +51,7 @@
                 = lucide_icon :moon
               .flex.justify-between.items-center.text-xl{class: ("italic" unless slot.filled?)}
                 %span= slot.label
-              = link_to activities_path(datetime: DateTime.new(@date.year, @date.month, @date.day, slot.hour), activity_id: slot.activity&.id) do
+              = link_to activities_path(datetime: Time.zone.local(@date.year, @date.month, @date.day, slot.hour), activity_id: slot.activity&.id) do
                 = lucide_icon :edit
       - else
         - slots.each do |slot|
@@ -62,5 +62,5 @@
               = lucide_icon :sun
             .flex.justify-between.items-center.text-xl{class: ("italic" unless slot.filled?)}
               %span= slot.label
-            = link_to activities_path(datetime: DateTime.new(@date.year, @date.month, @date.day, slot.hour), activity_id: slot.activity&.id) do
+            = link_to activities_path(datetime: Time.zone.local(@date.year, @date.month, @date.day, slot.hour), activity_id: slot.activity&.id) do
               = lucide_icon :edit

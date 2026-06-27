@@ -1,6 +1,6 @@
 -# locals: (day:)
 
-= link_to activities_path(datetime: day.date.to_datetime), class:"relative flex flex-col px-3! border-2 border-text #{"disabled" if day.date > Date.current}" do
+= link_to activities_path(date: day.date), class:"relative flex flex-col px-3! border-2 border-text #{"disabled" if day.date > Date.current}" do
   .absolute.inset-0{style: "background-color: var(--color-custom-green); mask-image: linear-gradient(to right, black #{day.percentage_done}%, transparent #{day.percentage_done}%); -webkit-mask-image: linear-gradient(to right, black #{day.percentage_done}%, transparent #{day.percentage_done}%)"}
   .relative.z-10.flex.gap-1.items-center
     %span= day.date.day

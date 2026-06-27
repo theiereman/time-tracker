@@ -23,14 +23,14 @@ class Activity < ApplicationRecord
 
   def defaults
     return if started_at.nil?
-    self.ended_at ||= started_at&.to_datetime + DURATION_IN_HOURS.hour
+    self.ended_at ||= started_at + DURATION_IN_HOURS.hour
 
     self.started_at = self.started_at.beginning_of_hour
     self.ended_at = self.ended_at.beginning_of_hour
   end
 
   def unique_on_timespan_for_user
-    end_timedate = started_at.to_datetime + DURATION_IN_HOURS.hour
+    end_timedate = started_at + DURATION_IN_HOURS.hour
     return unless user.activities.where(started_at: started_at...end_timedate).any?
 
     errors.add(:base, "Une activité exsite déjà pour cette période.")

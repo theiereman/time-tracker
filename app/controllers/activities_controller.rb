@@ -21,7 +21,7 @@ class ActivitiesController < ApplicationController
     @date = params[:date].to_date
     @error = false
     Current.user.sleep_hours.each do |h|
-      datetime = DateTime.new(@date.year, @date.month, @date.day, h)
+      datetime = Time.zone.local(@date.year, @date.month, @date.day, h)
       activity = Current.user.activities.find_by(started_at: datetime) || Current.user.activities.build(started_at: datetime)
       activity.category = Current.user.activity_categories.sleep
       @error = true unless activity.save
