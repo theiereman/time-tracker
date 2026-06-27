@@ -63,3 +63,17 @@ Errors are shown via `helpers.turbo_flash_toast(:alert, message)` which renders 
 
 ### Stimulus controllers
 Minimal: `autosubmit_controller.js` and `element_removal_controller.js` in `app/javascript/controllers/`.
+
+### HAML + Tailwind classes avec `/`
+Les classes Tailwind contenant `/` (ex. `text-text/60`, `bg-primary/50`) ne peuvent **pas** être utilisées dans la notation pointée HAML (`.text-text/60` est invalide). Il faut toujours les mettre dans un attribut `{class: "..."}` :
+
+```haml
+-# ❌ invalide
+%p.text-text/60
+
+-# ✅ correct
+%p{class: "text-text/60"}
+
+-# ✅ correct (mix)
+%p.mt-2.font-normal{class: "text-text/60"}
+```

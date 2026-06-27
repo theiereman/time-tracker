@@ -3,9 +3,9 @@
 %h1.mb-12 Statistiques
 
 %h2 Nombre d'activités par catégorie
-.my-6.max-w-254= column_chart @count_per_category, legend: :bottom, library: { grouped: false, scales: { x: { ticks: { display: false } } } }
+.my-6= column_chart @count_per_category, legend: :bottom, library: { grouped: false, scales: { x: { ticks: { display: false } } } }
 
-.overflow-x-auto.mb-12.max-w-254
+.overflow-x-auto.mb-12
   %table.w-full.text-sm
     %thead
       %tr.border-b.border-gray-200.text-left.text-gray-500
@@ -23,5 +23,5 @@
           %td.py-2.text-right= "#{row[:percentage]}%"
 
 %h2 Activités au cours du temps
-.my-6.max-w-254= line_chart @hours_per_category_over_time, legend: :bottom
+.my-6= line_chart @hours_per_category_over_time, legend: :bottom
 

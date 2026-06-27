@@ -1,36 +1,39 @@
 -# locals: (user:)
 
 .space-y-12
-  %h2.mb-3 Emploi du temps
-  = form_with model: @user, url: setting_path(@user), method: :patch, class: "flex gap-6" do |f|
-    .flex.flex-col.gap-2
+  %h2.mb-1 Emploi du temps
+  = form_with model: @user, url: setting_path(@user), method: :patch, class: "flex gap-8" do |f|
+    .flex.flex-col.gap-1
       = f.label "Heure de réveil"
-      = f.text_field :wake_up_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "w-12"
+      .flex.items-baseline.gap-1
+        = f.text_field :wake_up_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "w-16 text-2xl font-extrabold text-center"
+        %span.font-bold h
 
-    .flex.flex-col.gap-2
+    .flex.flex-col.gap-1
       = f.label "Heure de coucher"
-      = f.text_field :sleep_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "w-12"
+      .flex.items-baseline.gap-1
+        = f.text_field :sleep_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "w-16 text-2xl font-extrabold text-center"
+        %span.font-bold h
 
-  .mt-8
-    #title.mb-3
-      %h2 Catégories
-      %p Conseil : Evitez les catégories trop précises pour améliorer la visualiation des statistiques
-    .flex.flex-col.gap-2
-      - user.activity_categories.order(:protected).each do |category|
-        .flex.items-center.gap-2
-          - if category.protected?
-            = color_field_tag nil, category.color, disabled: true, class: "size-9 p-0! cursor-not-allowed opacity-40"
-            = text_field_tag nil, category.label, disabled: true
-          - else
-            = form_with model: category, url: activity_category_path(category), class: "flex items-center gap-2" do |f|
-              = f.color_field :color, data: {controller: "autosubmit", action: "change->autosubmit#submit"}, class: "size-9 p-0! cursor-pointer"
-              = f.text_field :label, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}
-            = button_to activity_category_path(category), method: :delete, data: {turbo_confirm: "Supprimer cette catégorie ?"}, class: "text-red-500 hover:text-red-700" do
-              = lucide_icon "trash-2", size: 16
+  .flex.justify-between.items-start.mb-1
+    %h2 Catégories
+  %p.font-normal.normal-case.mb-6{class: "text-text/60"} Évitez les catégories trop précises pour de meilleures statistiques
 
-    .mt-4
-      = form_with model: Activity::Category.new, url: activity_categories_path do |f|
-        .flex.gap-2.items-center
-          = f.color_field :color, class: "size-9 p-0! cursor-pointer"
-          = f.text_field :label, placeholder: "Nouvelle catégorie"
-          = f.submit "Ajouter"
+  .flex.flex-col.gap-3.max-w-sm
+    - user.activity_categories.order(:protected).each do |category|
+      .flex.items-center.gap-3
+        - if category.protected?
+          = color_field_tag nil, category.color, disabled: true, class: "size-9 p-0! cursor-not-allowed opacity-40 border-0!"
+          %span.font-bold.opacity-40= category.label
+        - else
+          = form_with model: category, url: activity_category_path(category), class: "flex items-center gap-3 flex-1" do |f|
+            = f.color_field :color, data: {controller: "autosubmit", action: "change->autosubmit#submit"}, class: "size-9 p-0! cursor-pointer border-0!"
+            = f.text_field :label, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "flex-1"
+          = button_to activity_category_path(category), method: :delete, data: {turbo_confirm: "Supprimer cette catégorie ?"}, class: "p-0! text-red-600 hover:bg-transparent! hover:text-red-800!" do
+            = lucide_icon "trash-2", class: "size-4"
+
+  .mt-6.pt-6.border-t-3{class: "border-text/20"}
+    = form_with model: Activity::Category.new, url: activity_categories_path, class: "flex gap-3 items-center max-w-sm" do |f|
+      = f.color_field :color, class: "size-9 p-0! cursor-pointer border-0! shrink-0"
+      = f.text_field :label, placeholder: "Nouvelle catégorie", class: "flex-1"
+      = f.submit "Ajouter", class: "bg-primary!"
