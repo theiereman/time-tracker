@@ -1,7 +1,13 @@
-- content_for :title, "Sign in"
+- content_for :title, "Connexion"
 
-= form_with url: session_path, method: :post, class: "flex flex-col gap-2 mx-auto" do |form|
-  .flex.flex-col
-    = form.label :email_address, "Adresse e-mail"
-    = form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", placeholder: "you@example.com"
-  = form.submit "Recevoir un code de connexion"
+.border-5.p-6
+  = form_with url: session_path, method: :post, class: "flex flex-col gap-8 items-center text-center" do |form|
+    %div
+      %h2 Connexion
+      %p.mt-2.font-normal.normal-case{class: "text-text/60"} Connexion par code unique
+
+    .flex.flex-col.items-center.gap-1
+      = form.label :email_address, "Adresse e-mail"
+      = form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", placeholder: "vous@exemple.com", class: "text-center w-64"
+
+    = form.submit "Recevoir un code", class: "bg-primary!"

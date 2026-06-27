@@ -23,7 +23,7 @@ class Sessions::MagicLinksController < ApplicationController
 
     def ensure_email_address_pending_authentication
       unless email_address_pending_authentication.present?
-        redirect_to new_session_path, alert: "Enter your email address to sign in."
+        redirect_to new_session_path, alert: "Entrez votre addresse mail pour vous connecter."
       end
     end
 
@@ -38,19 +38,19 @@ class Sessions::MagicLinksController < ApplicationController
     def sign_in(magic_link)
       clear_pending_authentication_token
       start_new_session_for magic_link.user
-      redirect_to after_authentication_url, notice: "Welcome!"
+      redirect_to after_authentication_url
     end
 
     def email_address_mismatch
       clear_pending_authentication_token
-      redirect_to new_session_path, alert: "Something went wrong. Please try again."
+      redirect_to new_session_path, alert: "Une erreur est survenue. Veuillez réessayer."
     end
 
     def invalid_code
-      redirect_to new_session_magic_link_path, alert: "That code is invalid or expired. Try another."
+      redirect_to new_session_magic_link_path, alert: "Le code est invalide ou expiré. Veuillez réessayer."
     end
 
     def rate_limit_exceeded
-      redirect_to new_session_magic_link_path, alert: "Too many attempts. Try again in 15 minutes."
+      redirect_to new_session_magic_link_path, alert: "Trop de tentatives. Veuillez réessayer dans 15 minutes."
     end
 end
