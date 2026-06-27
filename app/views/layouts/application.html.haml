@@ -8,6 +8,7 @@
     %meta{:content => "yes", :name => "mobile-web-app-capable"}/
     %meta{:content => "morph", :name => "turbo-refresh-method"}/
     %meta{:content => "preserve", :name => "turbo-refresh-scroll"}/
+    %meta{:content => "no-cache", :name => "turbo-cache-control"}/
     = csrf_meta_tags
     = csp_meta_tag
     = yield :head
@@ -19,7 +20,7 @@
   %body.h-screen.flex.flex-col.md:flex-row
     = flash_toasts
     .hidden.md:block= render "nav/sidebar"
-    .w-full.overflow-y-scroll.flex-1
+    .w-full.overflow-y-scroll.flex-1{style: "view-transition-name: page-content"}
       .p-6.max-w-254.mx-auto
         = yield
     .md:hidden= render "nav/navbar"
