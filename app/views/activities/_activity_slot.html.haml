@@ -5,7 +5,7 @@
   .font-bold.text-nowrap.flex.gap-2
     %span= "#{slot.hour} h"
     = lucide_icon :sun
-  .flex.justify-between.items-center.text-xl.text-ellipsis{class: ("italic" unless slot.filled?)}
+  .flex.justify-between.items-center.md:text-xl.text-ellipsis{class: ("italic" unless slot.filled?)}
     %span= slot.label
   .flex.items-center.gap-1
     = link_to activities_path(datetime: Time.zone.local(date.year, date.month, date.day, slot.hour), activity_id: slot.activity&.id), class: "p-2!" do

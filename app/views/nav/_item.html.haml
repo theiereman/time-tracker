@@ -2,5 +2,5 @@
 
 - active = path == Current.path || additional_path == Current.path
 
-= link_to path, class: "w-full flex justify-center #{'active' if active}", data: { nav_index: nav_index } do
-  = lucide_icon icon, class: "size-10"
+= link_to path, class: "w-full flex justify-center px-0! md:px-3! #{'active' if active}", data: { nav_index: nav_index } do
+  = lucide_icon icon, class: "size-8 md:size-10"

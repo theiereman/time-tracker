@@ -32,8 +32,8 @@
           = button_to activity_category_path(category), method: :delete, data: {turbo_confirm: "Supprimer cette catégorie ?"}, class: "p-0! text-red-600 hover:bg-transparent! hover:text-red-800!" do
             = lucide_icon "trash-2", class: "size-4"
 
-  .mt-6.pt-6.border-t-3{class: "border-text/20"}
-    = form_with model: Activity::Category.new, url: activity_categories_path, class: "flex gap-3 items-center max-w-sm" do |f|
+  = form_with model: Activity::Category.new, url: activity_categories_path, class: "flex flex-col md:flex-row gap-3 md:items-center max-w-sm" do |f|
+    .flex.gap-2
       = f.color_field :color, class: "size-9 p-0! cursor-pointer border-0! shrink-0"
       = f.text_field :label, placeholder: "Nouvelle catégorie", class: "flex-1"
-      = f.submit "Ajouter", class: "bg-primary!"
+    = f.submit "Ajouter", class: "bg-primary!"

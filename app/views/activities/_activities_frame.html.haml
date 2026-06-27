@@ -5,23 +5,22 @@
       %h1= l(@date, locale: :fr, format: :long)
       %h2= "de #{@activity.started_at.hour}h à #{@activity.ended_at.hour}h"
 
-  .flex.flex-col
-    .flex.justify-between.border-3.items-center
-      = link_to activities_path(date: @activity.started_at.to_date - 1.week), class: "tooltip py-4!" do 
-        = lucide_icon "chevrons-left"
-        %span.tooltiptext Semaine précédente
-      = link_to activities_path(date: @activity.started_at.to_date - 1.day), class: "tooltip py-4!" do 
-        = lucide_icon "chevron-left"
-        %span.tooltiptext Jour précédent
-      = link_to activities_path, class: "tooltip py-4!" do 
-        = lucide_icon "arrow-down"
-        %span.tooltiptext Aujourd'hui
-      = link_to activities_path(date: @activity.started_at.to_date + 1.day), class: "tooltip py-4! #{'disabled' if @activity.started_at.to_date + 1.day > Date.current}" do 
-        = lucide_icon "chevron-right"
-        %span.tooltiptext Jour suivant
-      = link_to activities_path(date: @activity.started_at.to_date + 1.week), class: "tooltip py-4! #{'disabled' if @activity.started_at.to_date + 1.week > Date.current}" do 
-        = lucide_icon "chevrons-right"
-        %span.tooltiptext Semaine suivante
+  .flex.border-3.items-center.w-full.md:w-fit
+    = link_to activities_path(date: @activity.started_at.to_date - 1.week), class: "tooltip py-3! px-2! w-full md:w-fit" do 
+      = lucide_icon "chevrons-left"
+      %span.tooltiptext Semaine précédente
+    = link_to activities_path(date: @activity.started_at.to_date - 1.day), class: "tooltip py-3! px-2! w-full md:w-fit" do 
+      = lucide_icon "chevron-left"
+      %span.tooltiptext Jour précédent
+    = link_to activities_path, class: "tooltip py-3! px-2! w-full md:w-fit" do 
+      = lucide_icon "arrow-down"
+      %span.tooltiptext Aujourd'hui
+    = link_to activities_path(date: @activity.started_at.to_date + 1.day), class: "tooltip py-3! px-2! w-full md:w-fit #{'disabled' if @activity.started_at.to_date + 1.day > Date.current}" do 
+      = lucide_icon "chevron-right"
+      %span.tooltiptext Jour suivant
+    = link_to activities_path(date: @activity.started_at.to_date + 1.week), class: "tooltip py-3! px-2! w-full md:w-fit #{'disabled' if @activity.started_at.to_date + 1.week > Date.current}" do 
+      = lucide_icon "chevrons-right"
+      %span.tooltiptext Semaine suivante
 
 .space-y-6
   .grid.grid-cols-2.gap-4.text-lg
@@ -30,7 +29,7 @@
         = form.hidden_field :id, value: @activity&.id
         = form.hidden_field :activity_category_id, value: category.id
         = form.hidden_field :started_at, value: @activity.started_at
-        = form.submit category.label, class: "size-full p-6! hover:bg-(--cat-hover)! cursor-pointer", data: { controller: "press", action: "pointerdown->press#press pointerup->press#release pointercancel->press#release pointerleave->press#release" }, style: "background-color: #{category.color}; color: #{contrasted_text_color(category.color)}; border: 5px solid #{darken_color(category.color)}; --cat-hover: #{darken_color(category.color)}"
+        = form.submit category.label, class: "size-full p-2! truncate md:py-4! hover:bg-(--cat-hover)! cursor-pointer", data: { controller: "press", action: "pointerdown->press#press pointerup->press#release pointercancel->press#release pointerleave->press#release" }, style: "background-color: #{category.color}; color: #{contrasted_text_color(category.color)}; border: 5px solid #{darken_color(category.color)}; --cat-hover: #{darken_color(category.color)}"
 
   .title
     %h2.mt-10.flex.justify-between Activités de la journée
