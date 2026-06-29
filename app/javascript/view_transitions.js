@@ -8,18 +8,22 @@ document.addEventListener("click", (event) => {
   const targetIndex = parseInt(link.dataset.navIndex);
   const currentIndex = parseInt(document.body.dataset.navIndex ?? "-1");
 
-  if (isNaN(targetIndex) || currentIndex === -1 || targetIndex === currentIndex) return;
+  if (isNaN(targetIndex) || currentIndex === -1 || targetIndex === currentIndex)
+    return;
 
   document.documentElement.style.setProperty(
     "--slide-direction",
-    targetIndex > currentIndex ? "1" : "-1"
+    targetIndex > currentIndex ? "1" : "-1",
   );
 });
 
 document.addEventListener("turbo:visit", (event) => {
-  if (event.detail.url !== window.location.href) navigating = true;
+  const targetPath = new URL(event.detail.url, window.location.href).pathname;
+  if (targetPath !== window.location.pathname) navigating = true;
 });
-document.addEventListener("turbo:load", () => { navigating = false; });
+document.addEventListener("turbo:load", () => {
+  navigating = false;
+});
 
 document.addEventListener("turbo:before-render", (event) => {
   if (!document.startViewTransition || !navigating) return;
