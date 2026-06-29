@@ -6,7 +6,7 @@ class SettingsController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to settings_path, notice: "Paramètres mis à jour"
+      redirect_to settings_path, notice: t("settings.flash.updated")
     else
       redirect_to settings_path, alert: @user.errors.full_messages.first
     end
@@ -19,6 +19,6 @@ class SettingsController < ApplicationController
   end
 
   def user_params
-    params.expect(user: [ :wake_up_hour, :sleep_hour ])
+    params.expect(user: [ :wake_up_hour, :sleep_hour, :locale ])
   end
 end

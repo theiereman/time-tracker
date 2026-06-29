@@ -4,7 +4,7 @@
   - unless slot.filled?
     .absolute.animate-pulse.size-2.rounded-full.bg-red-500{class: "-left-3.5"}
   .font-bold.text-nowrap.flex.gap-2
-    %span= "#{slot.hour} h"
+    %span= t("activities.slot.hour", hour: slot.hour)
     = lucide_icon :moon
   .flex.justify-between.items-center.md:text-xl{class: ("italic" unless slot.filled?)}
     %span= slot.label

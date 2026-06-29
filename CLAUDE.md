@@ -25,35 +25,55 @@ bin/rails test
 bin/rails test test/models/activity_test.rb   # single file
 bin/rails test:system                          # system tests (Capybara + Selenium)
 
-# Linting
+# Linting (rubocop-rails-omakase rules)
 bin/rubocop
 
 # Security scan
 bin/brakeman
+bin/importmap audit   # JS dependency audit (also run in CI)
 
 # Database
 bin/rails db:migrate
 bin/rails db:seed
+
+# Background jobs (Solid Queue)
+bin/jobs
 ```
+
+CI (`.github/workflows/ci.yml`) runs, in order: `brakeman`, `bin/importmap audit`, `bin/rubocop`, then `bin/rails test` + `bin/rails test:system`.
 
 ## Architecture
 
 ### Authentication
 Magic-link only — no password login. `MagicLink` records are single-use (consumed on verification, expire in 15 min). The `Authentication` concern (included in `ApplicationController`) gates all actions; `Current.user` is the entry point for the authenticated user throughout a request.
 
+Non-obvious auth details:
+- **First login auto-creates the user** — `SessionsController` does `User.find_by(email) || create`; `User::MagicLinkable#send_magic_link` auto-detects sign-up vs sign-in.
+- **Codes use Crockford base32** (`MagicLink::Code`) — 6 chars, ambiguous letters excluded; input is sanitized (uppercased, O→0/I→1/L→1) so users can mistype.
+- **`pending_authentication_token`** — a signed cookie set during verification (`Authentication::ViaMagicLink`) ties the code to the originating browser, preventing cross-browser reuse.
+- **Rate limited** — `SessionsController#create` (10/3 min) and code entry (10/15 min) via Rails `rate_limit` (Solid Cache backed).
+- **Sessions** record `user_agent` and `ip_address`.
+
 ### Data model
 - **User** — stores `settings` as JSON (via `store`); `wake_up_hour` and `sleep_hour` come from `User::Setupable`
-- **Activity** — one hour fixed-duration slots, snapped to the start of the hour. A user can have at most 24 activities per day (one per hour). The "sleep" category is protected and cannot be deleted or renamed.
+- **Activity** — one hour fixed-duration slots, snapped to the start of the hour. A user can have at most 24 activities per day (one per hour). The "sleep" category is protected and cannot be deleted or renamed. `ActivitiesController#mark_night_as_sleep` bulk-creates activities for all of a user's sleep hours on a date and assigns them to the protected "Sommeil" category.
 - **Activity::Category** — per-user, created with defaults on user creation. `protected: true` means immutable label/color and indestructible.
 
 ### Key non-obvious patterns
 - **`User::Progress`** — query object scoped to a date range; used by both the day view (via `ProgressPresenter`) and the calendar view (via `MonthlyCalendar`). Call `User::Progress.for_the_day(user, date)` or `.for_the_month(...)`.
 - **`ProgressPresenter`** — wraps a `User::Progress` and builds 24 `Slot` structs (one per hour) for the activity feed. Slots carry `:hour`, `:activity`, and `:night` (bool, based on `wake_up_hour`/`sleep_hour`).
 - **`Day` / `MonthlyCalendar`** — plain Ruby objects for the calendar view; no ActiveRecord.
-- **Presenters** live in `app/presenters/` and are plain Ruby objects — not view helpers.
+- **Presenters** live in `app/presenters/` and are plain Ruby objects — not view helpers. The statistics view uses `ActivitiesPerCategoryPresenter` (counts + top-categories table) and `HoursPerCategoryPresenter` (time-series for Chartkick).
+- **Helpers** — `NavigationHelper` builds the nav items and resolves the active one via `Current.path`; `ApplicationHelper` has `contrasted_text_color` and `darken_color` for category-color UI.
 
-### Localization
-The app UI is in French. Validation error messages and category names are in French. The locale files are in `config/locales/fr.yml`; date/time formats follow French conventions.
+### Localization (i18n)
+The app is bilingual — **English (`:en`, default) and French (`:fr`)**, configured in `config/application.rb` (`available_locales`, `default_locale`, `fallbacks`). **Never hardcode UI text**; use Rails-native inference: lazy `t(".key")` in views/controllers, `activerecord.attributes`/`activerecord.errors.models` for labels and validation messages (models call `errors.add(:attr, :symbol)`, not literal strings), and `default_i18n_subject` in mailers.
+
+- **Locale files are split per domain** under `config/locales/` (flat — auto-loaded by the default `config/locales/*.yml` glob, no `load_path` config). Each app file (`activities.yml`, `sessions.yml`, `settings.yml`, `models.yml`, `categories.yml`, `mailers.yml`, `shared.yml`, …) holds **both `en:` and `fr:`** so a feature's translations stay side-by-side. `fr.yml` holds only the Rails framework French defaults; English framework strings come from Rails' built-ins.
+
+- **Locale resolution** — `ApplicationController#switch_locale` (an `around_action`) picks: persisted `Current.user.locale` → `Accept-Language` header → `default_locale`. Users override it via the language selector in Settings; it's stored in `User#settings` (`User::Setupable` store accessor).
+- **Mailers** wrap delivery in `I18n.with_locale(user.locale)` since they run outside the request.
+- **Default category labels** (`Activity::Category.create_default_categories_for`) are seeded via `I18n.t` at user-creation time; the protected "sleep" category is found by `protected: true` (not by label), so it's locale-independent.
 
 ### Navigation context
 `Current.path`, `Current.action`, and `Current.controller` are set on every request (see `ApplicationController`) and are available in views/helpers for active-state logic in the nav.
@@ -62,7 +82,7 @@ The app UI is in French. Validation error messages and category names are in Fre
 Errors are shown via `helpers.turbo_flash_toast(:alert, message)` which renders a Turbo Stream — not a traditional redirect-with-flash.
 
 ### Stimulus controllers
-Minimal: `autosubmit_controller.js` and `element_removal_controller.js` in `app/javascript/controllers/`.
+Minimal — in `app/javascript/controllers/`: `autosubmit_controller.js`, `element_removal_controller.js`, and `press_controller.js` (button press scale/brightness animation).
 
 ### HAML + Tailwind classes avec `/`
 Les classes Tailwind contenant `/` (ex. `text-text/60`, `bg-primary/50`) ne peuvent **pas** être utilisées dans la notation pointée HAML (`.text-text/60` est invalide). Il faut toujours les mettre dans un attribut `{class: "..."}` :

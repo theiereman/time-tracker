@@ -1,0 +1,13 @@
+# Cross-cutting strings used in multiple places.
+en:
+  languages:
+    en: English
+    fr: Français
+  units:
+    hour_short: h
+fr:
+  languages:
+    en: English
+    fr: Français
+  units:
+    hour_short: h

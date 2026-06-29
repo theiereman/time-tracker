@@ -3,7 +3,7 @@ class ProgressPresenter
 
   Slot = Data.define(:hour, :activity, :night) do
     def filled? = activity.present?
-    def label = filled? ? activity.category.label : "Non renseigné"
+    def label = filled? ? activity.category.label : I18n.t("activities.slot.empty")
   end
 
   def initialize(user)

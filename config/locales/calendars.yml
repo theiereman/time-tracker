@@ -1,0 +1,26 @@
+en:
+  calendars:
+    show:
+      title: Calendar
+      next_day_available: "Next day available in %{hours}h%{minutes} - server time: %{time}"
+      weekdays:
+        - Mon
+        - Tue
+        - Wed
+        - Thu
+        - Fri
+        - Sat
+        - Sun
+fr:
+  calendars:
+    show:
+      title: Calendrier
+      next_day_available: "Prochain jour disponible dans %{hours}h%{minutes} - heure du serveur : %{time}"
+      weekdays:
+        - lun
+        - mar
+        - mer
+        - jeu
+        - ven
+        - sam
+        - dim

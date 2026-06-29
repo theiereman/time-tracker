@@ -1,0 +1,67 @@
+# ActiveRecord model names, attribute labels and validation messages.
+en:
+  activerecord:
+    models:
+      activity:
+        one: activity
+        other: activities
+      activity/category:
+        one: category
+        other: categories
+      user: user
+    attributes:
+      user:
+        email_address: Email address
+        wake_up_hour: Wake-up time
+        sleep_hour: Bedtime
+        locale: Language
+      activity:
+        started_at: Start time
+      activity/category:
+        label: Label
+        color: Color
+    errors:
+      models:
+        activity:
+          attributes:
+            base:
+              already_exists: An activity already exists for this time slot.
+            started_at:
+              future: can't be in the future.
+        activity/category:
+          attributes:
+            base:
+              protected: This category is protected and cannot be modified.
+fr:
+  activerecord:
+    models:
+      activity:
+        one: activité
+        other: activités
+      activity/category:
+        one: catégorie
+        other: catégories
+      user: utilisateur
+    attributes:
+      user:
+        email_address: Adresse e-mail
+        wake_up_hour: Heure de réveil
+        sleep_hour: Heure de coucher
+        locale: Langue
+      activity:
+        started_at: Heure de début
+      activity/category:
+        label: Libellé
+        color: Couleur
+    errors:
+      models:
+        activity:
+          attributes:
+            base:
+              already_exists: "Une activité existe déjà pour cette période."
+            started_at:
+              future: "ne peut être dans le futur."
+        activity/category:
+          attributes:
+            base:
+              protected: "Cette catégorie est protégée et ne peut pas être modifiée."

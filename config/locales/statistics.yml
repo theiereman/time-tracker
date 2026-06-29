@@ -1,0 +1,20 @@
+en:
+  statistics:
+    show:
+      title: Statistics
+      activities_per_category: Number of activities per category
+      activities_over_time: Activities over time
+      table:
+        category: Category
+        hours: Hours
+        percentage: Percentage
+fr:
+  statistics:
+    show:
+      title: Statistiques
+      activities_per_category: Nombre d'activités par catégorie
+      activities_over_time: Activités au cours du temps
+      table:
+        category: Catégorie
+        hours: Heures
+        percentage: Pourcentage

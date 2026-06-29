@@ -1,23 +1,29 @@
 -# locals: (user:)
 
 .space-y-12
-  %h2.mb-1 Emploi du temps
-  = form_with model: @user, url: setting_path(@user), method: :patch, class: "flex gap-8" do |f|
+  %h2.mb-1= t(".global")
+  = form_with model: @user, url: setting_path(@user), method: :patch, class: "flex flex-wrap gap-8" do |f|
     .flex.flex-col.gap-1
-      = f.label "Heure de réveil"
+      = f.label :locale
+      = f.select :locale, options_for_select(I18n.available_locales.map { |l| [ t("languages.#{l}"), l ] }, @user.locale.presence || I18n.locale), {}, data: {controller: "autosubmit", action: "change->autosubmit#submit"}
+  %h2.mb-1= t(".schedule")
+  = form_with model: @user, url: setting_path(@user), method: :patch, class: "flex flex-wrap gap-8" do |f|
+    .flex.flex-col.gap-1
+      = f.label :wake_up_hour
       .flex.items-baseline.gap-1
         = f.text_field :wake_up_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "w-16 text-2xl font-extrabold text-center"
-        %span.font-bold h
+        %span.font-bold= t("units.hour_short")
 
     .flex.flex-col.gap-1
-      = f.label "Heure de coucher"
+      = f.label :sleep_hour
       .flex.items-baseline.gap-1
         = f.text_field :sleep_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "w-16 text-2xl font-extrabold text-center"
-        %span.font-bold h
+        %span.font-bold= t("units.hour_short")
+
 
   .flex.justify-between.items-start.mb-1
-    %h2 Catégories
-  %p.font-normal.normal-case.mb-6{class: "text-text/60"} Évitez les catégories trop précises pour de meilleures statistiques
+    %h2= t(".categories")
+  %p.font-normal.normal-case.mb-6{class: "text-text/60"}= t(".categories_hint")
 
   .flex.flex-col.gap-3.max-w-sm
     - user.activity_categories.order(:protected).each do |category|
@@ -29,11 +35,11 @@
           = form_with model: category, url: activity_category_path(category), class: "flex items-center gap-3 flex-1" do |f|
             = f.color_field :color, data: {controller: "autosubmit", action: "change->autosubmit#submit"}, class: "size-9 p-0! cursor-pointer border-0!"
             = f.text_field :label, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "flex-1"
-          = button_to activity_category_path(category), method: :delete, data: {turbo_confirm: "Supprimer cette catégorie ?"}, class: "p-0! text-red-600 hover:bg-transparent! hover:text-red-800!" do
+          = button_to activity_category_path(category), method: :delete, data: {turbo_confirm: t(".delete_confirm")}, class: "p-0! text-red-600 hover:bg-transparent! hover:text-red-800!" do
             = lucide_icon "trash-2", class: "size-4"
 
   = form_with model: Activity::Category.new, url: activity_categories_path, class: "flex flex-col md:flex-row gap-3 md:items-center max-w-sm" do |f|
     .flex.gap-2
       = f.color_field :color, class: "size-9 p-0! cursor-pointer border-0! shrink-0"
-      = f.text_field :label, placeholder: "Nouvelle catégorie", class: "flex-1"
-    = f.submit "Ajouter", class: "bg-primary!"
+      = f.text_field :label, placeholder: t(".new_category_placeholder"), class: "flex-1"
+    = f.submit t(".add_category"), class: "bg-primary!"

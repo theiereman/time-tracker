@@ -1,13 +1,13 @@
-- content_for :title, "Connexion"
+- content_for :title, t(".title")
 
 .border-5.p-6
   = form_with url: session_path, method: :post, class: "flex flex-col gap-8 items-center text-center" do |form|
     %div
-      %h2 Connexion
-      %p.mt-2.font-normal.normal-case{class: "text-text/60"} Connexion par code unique
+      %h2= t(".heading")
+      %p.mt-2.font-normal.normal-case{class: "text-text/60"}= t(".subtitle")
 
     .flex.flex-col.items-center.gap-1
-      = form.label :email_address, "Adresse e-mail"
-      = form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", placeholder: "vous@exemple.com", class: "text-center w-64"
+      = form.label :email_address, t(".email_label")
+      = form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", placeholder: t(".email_placeholder"), class: "text-center w-64"
 
-    = form.submit "Recevoir un code", class: "bg-primary!"
+    = form.submit t(".submit"), class: "bg-primary!"

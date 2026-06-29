@@ -21,7 +21,7 @@ class Activity::CategoriesController < ApplicationController
     @activity_category = Current.user.activity_categories.new(activity_category_params)
 
     if @activity_category.save
-      redirect_to settings_path, notice: "Catégorie créée"
+      redirect_to settings_path, notice: t("activity.categories.flash.created")
     else
       redirect_to settings_path, alert: @activity_category.errors.full_messages.first
     end
@@ -29,7 +29,7 @@ class Activity::CategoriesController < ApplicationController
 
   def update
     if @activity_category.update(activity_category_params)
-      redirect_to settings_path, notice: "Catégories mises à jour"
+      redirect_to settings_path, notice: t("activity.categories.flash.updated")
     else
       redirect_to settings_path, alert: @activity_category.errors.full_messages.first
     end
@@ -37,9 +37,9 @@ class Activity::CategoriesController < ApplicationController
 
   def destroy
     @activity_category.destroy!
-    redirect_to settings_path, notice: "Catégorie supprimée"
+    redirect_to settings_path, notice: t("activity.categories.flash.destroyed")
   rescue ActiveRecord::RecordNotDestroyed
-    redirect_to settings_path, alert: "Impossible de supprimer cette catégorie"
+    redirect_to settings_path, alert: t("activity.categories.flash.destroy_failed")
   end
 
   private

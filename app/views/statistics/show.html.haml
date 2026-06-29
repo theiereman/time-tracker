@@ -1,17 +1,17 @@
-= content_for :title, "Statistiques"
+= content_for :title, t(".title")
 
-%h1.mb-12 Statistiques
+%h1.mb-12= t(".title")
 
-%h2 Nombre d'activités par catégorie
+%h2= t(".activities_per_category")
 .my-6= column_chart @count_per_category, legend: :bottom, library: { grouped: false, scales: { x: { ticks: { display: false } } } }
 
 .overflow-x-auto.mb-12
   %table.w-full.text-sm
     %thead
       %tr.border-b.border-gray-200.text-left.text-gray-500
-        %th.py-2.pr-4.font-medium Catégorie
-        %th.py-2.pr-4.font-medium.text-right Heures
-        %th.py-2.font-medium.text-right Pourcentage
+        %th.py-2.pr-4.font-medium= t(".table.category")
+        %th.py-2.pr-4.font-medium.text-right= t(".table.hours")
+        %th.py-2.font-medium.text-right= t(".table.percentage")
     %tbody
       - @top_categories.each do |row|
         %tr.border-b.border-gray-100
@@ -22,6 +22,6 @@
           %td.py-2.pr-4.text-right= row[:count]
           %td.py-2.text-right= "#{row[:percentage]}%"
 
-%h2 Activités au cours du temps
+%h2= t(".activities_over_time")
 .my-6= line_chart @hours_per_category_over_time, legend: :bottom
 

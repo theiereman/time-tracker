@@ -1,0 +1,14 @@
+en:
+  magic_link_mailer:
+    sign_in_instructions:
+      subject: "Your Time Tracker code is %{code}"
+      greeting: "Hi,"
+      instructions: "Use this code to sign in to Time Tracker:"
+      expiry_notice: This code expires in 15 minutes. If you didn't request it, you can safely ignore this email.
+fr:
+  magic_link_mailer:
+    sign_in_instructions:
+      subject: "Votre code Time Tracker est %{code}"
+      greeting: "Bonjour,"
+      instructions: "Utilisez ce code pour vous connecter à Time Tracker :"
+      expiry_notice: Ce code expire dans 15 minutes. Si vous n'en êtes pas à l'origine, vous pouvez ignorer cet e-mail.
