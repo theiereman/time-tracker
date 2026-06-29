@@ -7,7 +7,7 @@ module User::Setupable
   included do
     before_validation :set_default_values
 
-    store :settings, accessors: [ :sleep_hour, :wake_up_hour ]
+    store :settings, accessors: [ :sleep_hour, :wake_up_hour, :locale ]
 
     def wake_up_hour = super.to_i
     def sleep_hour = super.to_i

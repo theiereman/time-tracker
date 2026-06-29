@@ -18,10 +18,10 @@
     = flash_toasts
     .flex.flex-col.justify-between.h-full
       .flex.flex-col
-        %h1 life 
-        %h1 tracker
+        %h1= t("layouts.sessions.brand_top")
+        %h1= t("layouts.sessions.brand_bottom")
 
       %div.mx-auto{class: "h-1/2"}
         = yield
 
-      %h2.self-end.text-end{class: "w-2/3 md:w-1/2"} who thought you'll be your own big brother?
+      %h2.self-end.text-end{class: "w-2/3 md:w-1/2"}= t("layouts.sessions.tagline")

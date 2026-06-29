@@ -33,12 +33,12 @@ class Activity < ApplicationRecord
     end_timedate = started_at + DURATION_IN_HOURS.hour
     return unless user.activities.where(started_at: started_at...end_timedate).any?
 
-    errors.add(:base, "Une activité exsite déjà pour cette période.")
+    errors.add(:base, :already_exists)
   end
 
   def present_or_past
     return if started_at.to_date <= Date.current
 
-    errors.add(:started_at, "ne peut être dans le futur.")
+    errors.add(:started_at, :future)
   end
 end

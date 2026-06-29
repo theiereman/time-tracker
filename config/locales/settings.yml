@@ -1,0 +1,29 @@
+en:
+  settings:
+    index:
+      title: Settings
+      subtitle: Adjust your settings to match your habits
+    form:
+      schedule: Schedule
+      categories: Categories
+      categories_hint: Avoid overly specific categories for better statistics
+      delete_confirm: Delete this category?
+      new_category_placeholder: New category
+      add_category: Add
+    flash:
+      updated: Settings updated
+fr:
+  settings:
+    index:
+      title: Paramètres
+      subtitle: Ajustez vos paramètres selon vos habitudes
+    form:
+      global: Général
+      schedule: Emploi du temps
+      categories: Catégories
+      categories_hint: Évitez les catégories trop précises pour de meilleures statistiques
+      delete_confirm: Supprimer cette catégorie ?
+      new_category_placeholder: Nouvelle catégorie
+      add_category: Ajouter
+    flash:
+      updated: Paramètres mis à jour

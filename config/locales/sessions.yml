@@ -1,0 +1,52 @@
+en:
+  sessions:
+    new:
+      title: Sign in
+      heading: Sign in
+      subtitle: Sign in with a one-time code
+      email_label: Email address
+      email_placeholder: you@example.com
+      submit: Get a code
+    magic_links:
+      new:
+        heading: Verification
+        code_sent_to: "Code sent to"
+        code_label: 6-digit code
+        submit: Sign in
+        back: ← Back
+      flash:
+        email_required: Enter your email address to sign in.
+        generic_error: Something went wrong. Please try again.
+        invalid_code: The code is invalid or has expired. Please try again.
+        rate_limited: Too many attempts. Please try again in 15 minutes.
+    flash:
+      user_creation_failed: Something went wrong while creating your account.
+      invalid_email: Enter a valid email address.
+      signed_out: You have been signed out.
+      rate_limited: Too many requests. Please try again later.
+fr:
+  sessions:
+    new:
+      title: Connexion
+      heading: Connexion
+      subtitle: Connexion par code unique
+      email_label: Adresse e-mail
+      email_placeholder: vous@exemple.com
+      submit: Recevoir un code
+    magic_links:
+      new:
+        heading: Vérification
+        code_sent_to: "Code envoyé à"
+        code_label: Code à 6 chiffres
+        submit: Se connecter
+        back: ← Retour
+      flash:
+        email_required: Entrez votre adresse e-mail pour vous connecter.
+        generic_error: Une erreur est survenue. Veuillez réessayer.
+        invalid_code: Le code est invalide ou expiré. Veuillez réessayer.
+        rate_limited: Trop de tentatives. Veuillez réessayer dans 15 minutes.
+    flash:
+      user_creation_failed: Une erreur est survenue lors de la création de votre compte.
+      invalid_email: Entrez une adresse e-mail valide.
+      signed_out: Vous avez été déconnecté.
+      rate_limited: Trop de requêtes. Réessayez plus tard.

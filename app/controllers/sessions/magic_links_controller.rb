@@ -23,7 +23,7 @@ class Sessions::MagicLinksController < ApplicationController
 
     def ensure_email_address_pending_authentication
       unless email_address_pending_authentication.present?
-        redirect_to new_session_path, alert: "Entrez votre addresse mail pour vous connecter."
+        redirect_to new_session_path, alert: t("sessions.magic_links.flash.email_required")
       end
     end
 
@@ -43,14 +43,14 @@ class Sessions::MagicLinksController < ApplicationController
 
     def email_address_mismatch
       clear_pending_authentication_token
-      redirect_to new_session_path, alert: "Une erreur est survenue. Veuillez réessayer."
+      redirect_to new_session_path, alert: t("sessions.magic_links.flash.generic_error")
     end
 
     def invalid_code
-      redirect_to new_session_magic_link_path, alert: "Le code est invalide ou expiré. Veuillez réessayer."
+      redirect_to new_session_magic_link_path, alert: t("sessions.magic_links.flash.invalid_code")
     end
 
     def rate_limit_exceeded
-      redirect_to new_session_magic_link_path, alert: "Trop de tentatives. Veuillez réessayer dans 15 minutes."
+      redirect_to new_session_magic_link_path, alert: t("sessions.magic_links.flash.rate_limited")
     end
 end

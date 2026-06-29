@@ -13,15 +13,15 @@ class SessionsController < ApplicationController
       set_pending_authentication_token magic_link
       redirect_to new_session_magic_link_path
     elsif user.nil?
-      redirect_to new_session_path, alert: "Une erreur est survenue lors de la création de l'utilisateur."
+      redirect_to new_session_path, alert: t("sessions.flash.user_creation_failed")
     else
-      redirect_to new_session_path, alert: "Entrez un email valide."
+      redirect_to new_session_path, alert: t("sessions.flash.invalid_email")
     end
   end
 
   def destroy
     terminate_session
-    redirect_to new_session_path, notice: "Vous avez été déconnecté."
+    redirect_to new_session_path, notice: t("sessions.flash.signed_out")
   end
 
   private
@@ -36,6 +36,6 @@ class SessionsController < ApplicationController
     end
 
     def rate_limit_exceeded
-      redirect_to new_session_path, alert: "Trop de requêtes. Rééssayez plus tard."
+      redirect_to new_session_path, alert: t("sessions.flash.rate_limited")
     end
 end
