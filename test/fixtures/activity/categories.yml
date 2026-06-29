@@ -1,9 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  label: MyString
+  label: Lecture
+  color: "#8ff0a4"
   user: one
 
 two:
-  label: MyString
+  label: Loisirs
+  color: "#f6d32d"
   user: two
+
+sommeil_one:
+  label: Sommeil
+  color: "#6b7280"
+  protected: true
+  user: one
