@@ -12,8 +12,8 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :activity_categories
 
-  def last_activity
-    activities.order(started_at: :desc).first
+  def last_activity(day)
+    activities.where(started_at: day.beginning_of_day...day.end_of_day).order(started_at: :desc).first
   end
 
   def wake_up_datetime(date: Date.current)
