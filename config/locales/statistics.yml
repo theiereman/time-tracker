@@ -4,6 +4,7 @@ en:
       title: Statistics
       activities_per_category: Number of activities per category
       activities_over_time: Activities over time
+      activities_over_time_per_category: Activities over time by category
       table:
         category: Category
         hours: Hours
@@ -14,6 +15,7 @@ fr:
       title: Statistiques
       activities_per_category: Nombre d'activités par catégorie
       activities_over_time: Activités au cours du temps
+      activities_over_time_per_category: Activités au cours du temps par catégorie
       table:
         category: Catégorie
         hours: Heures
