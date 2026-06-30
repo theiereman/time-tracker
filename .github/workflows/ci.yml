@@ -72,9 +72,13 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Provide Rails master key
+        run: printf '%s' "$RAILS_MASTER_KEY" | tr -d '[:space:]' > config/master.key
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
       - name: Deploy with Kamal
         run: bin/kamal deploy
         env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           KAMAL_REGISTRY_USERNAME: "teyermann"
           KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
