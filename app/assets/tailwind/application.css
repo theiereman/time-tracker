@@ -35,7 +35,7 @@ h3 {
 
 button,
 input[type="submit"],
-a {
+a:not(.unstyled) {
   @apply font-bold text-center uppercase cursor-pointer focus:bg-primary hover:bg-text hover:text-background py-2 px-6 transition-colors;
 
   &.active {

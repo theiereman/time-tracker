@@ -1,0 +1,17 @@
+en:
+  credits:
+    show:
+      developed_by: Developed by
+      contribute: Contribute to the
+      project: project on Github
+      animated_icons_by: Animated icons by
+      icons_by: Icons by
+
+fr:
+  credits:
+    show:
+      developed_by: Développé par
+      contribute: Contribuer au
+      project: projet sur Github
+      animated_icons_by: Icônes animées par
+      icons_by: Icônes par
