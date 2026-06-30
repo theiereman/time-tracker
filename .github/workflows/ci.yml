@@ -75,6 +75,6 @@ jobs:
       - name: Deploy with Kamal
         run: bin/kamal deploy
         env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_PRODUCTION_MASTER_KEY }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           KAMAL_REGISTRY_USERNAME: "teyermann"
           KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
