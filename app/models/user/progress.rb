@@ -11,7 +11,7 @@ class User::Progress
   end
 
   def self.for_the_month(user, date = Date.current)
-    new(user, date.beginning_of_month..date.end_of_month)
+    new(user, date.beginning_of_month.beginning_of_day..date.end_of_month.end_of_day)
   end
 
   def all_activities_done?(date: nil)
