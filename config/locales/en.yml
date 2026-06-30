@@ -218,9 +218,11 @@ en:
       two_words_connector: " and "
       words_connector: ", "
   time:
-    am: am
+    am: AM
     formats:
       default: "%a, %d %b %Y %H:%M:%S %z"
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
-    pm: pm
+      hour: "%-l %p"
+      time_of_day: "%-l:%M %p"
+    pm: PM

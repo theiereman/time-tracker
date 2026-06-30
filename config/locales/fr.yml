@@ -229,4 +229,6 @@ fr:
       default: "%d %B %Y %Hh %Mmin %Ss"
       long: "%A %d %B %Y %Hh%M"
       short: "%d %b %Hh%M"
+      hour: "%-Hh"
+      time_of_day: "%Hh%M"
     pm: pm

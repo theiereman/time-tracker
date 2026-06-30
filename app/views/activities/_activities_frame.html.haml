@@ -3,7 +3,7 @@
     %span= t(".prompt")
     .flex.flex-col.lg:flex-row.lg:gap-4.lg:items-end
       %h1= l(@date, format: :long)
-      %h2= t(".time_range", from: @activity.started_at.hour, to: @activity.ended_at.hour)
+      %h2= t(".time_range", from: format_hour(@activity.started_at.hour), to: format_hour(@activity.ended_at.hour))
 
   .flex.border-3.items-center.w-full.md:w-fit
     = link_to activities_path(date: @activity.started_at.to_date - 1.week), class: "tooltip py-3! px-2! w-full md:w-fit" do

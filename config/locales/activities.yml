@@ -4,7 +4,7 @@ en:
       title: Activities
     activities_frame:
       prompt: What did you do on...
-      time_range: "from %{from}h to %{to}h"
+      time_range: "from %{from} to %{to}"
       prev_week: Previous week
       prev_day: Previous day
       today: Today
@@ -18,14 +18,13 @@ en:
       mark_night_as_sleep: 'Mark the night as "Sleep"'
     slot:
       empty: Not filled in
-      hour: "%{hour} h"
 fr:
   activities:
     index:
       title: Activités
     activities_frame:
       prompt: Qu'avez-vous fait le...
-      time_range: "de %{from}h à %{to}h"
+      time_range: "de %{from} à %{to}"
       prev_week: Semaine précédente
       prev_day: Jour précédent
       today: Aujourd'hui
@@ -39,4 +38,3 @@ fr:
       mark_night_as_sleep: 'Marquer la nuit en "Sommeil"'
     slot:
       empty: Non renseigné
-      hour: "%{hour} h"

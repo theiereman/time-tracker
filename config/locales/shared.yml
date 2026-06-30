@@ -3,11 +3,7 @@ en:
   languages:
     en: English
     fr: Français
-  units:
-    hour_short: h
 fr:
   languages:
     en: English
     fr: Français
-  units:
-    hour_short: h

@@ -1,4 +1,9 @@
 module ApplicationHelper
+  # Localized display of an hour-of-day (0-23): "1 PM" in :en, "13 h" in :fr.
+  def format_hour(hour)
+    l(Time.zone.local(2000, 1, 1, hour), format: :hour)
+  end
+
   def contrasted_text_color(hex_color)
     r, g, b = hex_color.delete("#").scan(/../).map { |c| c.to_i(16) }
     luminance = (0.299 * r) + (0.587 * g) + (0.114 * b)

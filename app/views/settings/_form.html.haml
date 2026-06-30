@@ -7,18 +7,15 @@
       = f.label :locale
       = f.select :locale, options_for_select(I18n.available_locales.map { |l| [ t("languages.#{l}"), l ] }, @user.locale.presence || I18n.locale), {}, data: {controller: "autosubmit", action: "change->autosubmit#submit"}
   %h2.mb-1= t(".schedule")
+  - hour_options = (0..23).map { |h| [ format_hour(h), h ] }
   = form_with model: @user, url: setting_path(@user), method: :patch, class: "flex flex-wrap gap-8" do |f|
     .flex.flex-col.gap-1
       = f.label :wake_up_hour
-      .flex.items-baseline.gap-1
-        = f.text_field :wake_up_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "w-16 text-2xl font-extrabold text-center"
-        %span.font-bold= t("units.hour_short")
+      = f.select :wake_up_hour, options_for_select(hour_options, @user.wake_up_hour), {}, data: {controller: "autosubmit", action: "change->autosubmit#submit"}, class: "text-2xl font-extrabold text-center"
 
     .flex.flex-col.gap-1
       = f.label :sleep_hour
-      .flex.items-baseline.gap-1
-        = f.text_field :sleep_hour, data: {controller: "autosubmit", action: "blur->autosubmit#submit"}, class: "w-16 text-2xl font-extrabold text-center"
-        %span.font-bold= t("units.hour_short")
+      = f.select :sleep_hour, options_for_select(hour_options, @user.sleep_hour), {}, data: {controller: "autosubmit", action: "change->autosubmit#submit"}, class: "text-2xl font-extrabold text-center"
 
 
   .flex.justify-between.items-start.mb-1

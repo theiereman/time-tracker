@@ -4,7 +4,7 @@
   %h1= t(".title")
   - current_hour = DateTime.current.hour
   - current_minutes = DateTime.current.minute
-  %span= t(".next_day_available", hours: 23 - current_hour, minutes: 60 - current_minutes, time: l(DateTime.current, format: "%Hh%M"))
+  %span= t(".next_day_available", hours: 23 - current_hour, minutes: 60 - current_minutes, time: l(DateTime.current, format: :time_of_day))
 
 .flex.gap-2.w-full.justify-between.items-center
   = link_to calendar_path(date: @date - 1.month) do
@@ -33,6 +33,6 @@
             - activity = activities_for_day&.find { it.started_at.hour == i }
             .w-full.tooltip{style: "background-color: #{activity&.category&.color}", data: {action: "mouseover->tooltip#show mouseout->tooltip#hide"}}
               - if activity
-                %span.tooltiptext= "#{activity&.category&.label} #{t("common.from")} #{activity&.started_at.hour}h #{t("common.to")} #{activity&.ended_at.hour}h"
+                %span.tooltiptext= "#{activity&.category&.label} #{t("common.from")} #{format_hour(activity&.started_at.hour)} #{t("common.to")} #{format_hour(activity&.ended_at.hour)}"
 
         .w-12.text-end.font-thin= number_to_percentage(((activities_for_day&.size || 0).to_f / Activity.number_of_activities_in_a_day) * 100, precision: 0)
