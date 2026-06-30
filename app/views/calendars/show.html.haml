@@ -13,8 +13,21 @@
   = link_to calendar_path(date: @date + 1.month) do
     = lucide_icon "arrow-right"
 
-.grid.grid-cols-7.gap-1.max-w-xl.mx-auto.mt-6
-  - t(".weekdays").each do |weekday|
-    %p.font-bold.opacity-50= weekday
-  - @calendar.days.each do |day|
-    = render "day", day: day
+.max-w-xl.mx-auto{data: {"turbo-prefetch": "false", controller: "calendar-date-hover"}}
+  .grid.grid-cols-7.gap-1.mt-6{data: {action: "mouseleave->calendar-date-hover#reset"}}
+    - t(".weekdays").each do |weekday|
+      %p.font-bold.opacity-50= weekday
+    - @calendar.days.each do |day|
+      %div{id: day.date, data: {"calendar-date-hover-target": "day", action: "mouseover->calendar-date-hover#highlight"}}
+        = render "day", day: day
+
+  .mt-12.flex.flex-col.w-full{class: "min-h-[600px]"}
+    - activities = User::Progress.for_the_month(Current.user, @calendar.date)
+    - @calendar.days.each do |day|
+      - activities_for_day = activities.activities_per_day[day.date]
+      .flex.h-5.items-center.text-sm.transition-all.overflow-hidden{id: day.date, data: {"calendar-date-hover-target": "line"}, class: "first:[&_#activities]:border-t last:[&_#activities]:border-b"}
+        .w-8.font-semibold= day.date.day
+        #activities.flex.flex-1.justify-stretch.border-x.h-full
+          - Activity.number_of_activities_in_a_day.times do |i|
+            .w-full{style: "background-color: #{activities_for_day&.find { it.started_at.hour == i }&.category&.color}"}
+        .w-12.text-end.font-thin= number_to_percentage(((activities_for_day&.size || 0).to_f / Activity.number_of_activities_in_a_day) * 100, precision: 0)
