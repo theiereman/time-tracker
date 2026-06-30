@@ -9,15 +9,26 @@ export default class extends Controller {
   }
 
   highlight(event) {
-    const id = event.currentTarget.id;
+    const id = Number(event.currentTarget.id);
 
     this.sortedTargets
-      .filter((line) => line.id == id)
+      .filter((line) => Number(line.id) == id)
       .forEach((line) => this.#emphazise(line));
 
     this.sortedTargets
-      .filter((line) => line.id != id)
+      .filter((line) => this.#isNeighbour(Number(line.id), id))
       .forEach((line) => this.#diminish(line));
+
+    this.sortedTargets
+      .filter(
+        (line) =>
+          !(Number(line.id) == id || this.#isNeighbour(Number(line.id), id)),
+      )
+      .forEach((line) => this.#hide(line));
+  }
+
+  #isNeighbour(lineId, id) {
+    return [id - 1, id + 1].includes(lineId);
   }
 
   reset() {
@@ -30,16 +41,18 @@ export default class extends Controller {
     element.classList.remove("h-0!");
     element.classList.remove("opacity-20");
 
-    element.querySelector("#activities").classList.add("border!");
+    element.querySelector("#activities").classList.add("border-2!");
   }
 
   #diminish(element) {
+    element.classList.remove("h-0!");
     element.classList.add("opacity-20");
-    element.classList.add("h-0!");
-
     element.classList.remove("opacity-100");
+    element.querySelector("#activities").classList.remove("border-2!");
+  }
 
-    element.querySelector("#activities").classList.remove("border!");
+  #hide(element) {
+    element.classList.add("h-0!");
   }
 
   #reset(element) {
@@ -48,6 +61,6 @@ export default class extends Controller {
     element.classList.remove("h-0!");
     element.classList.remove("opacity-20");
 
-    element.querySelector("#activities").classList.remove("border!");
+    element.querySelector("#activities").classList.remove("border-2!");
   }
 }

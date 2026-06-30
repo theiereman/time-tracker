@@ -3,6 +3,7 @@ en:
     show:
       title: Calendar
       next_day_available: "Next day available in %{hours}h%{minutes} - server time: %{time}"
+      detailed_view_title: "Detailed hours per day"
       weekdays:
         - Mon
         - Tue
@@ -16,6 +17,7 @@ fr:
     show:
       title: Calendrier
       next_day_available: "Prochain jour disponible dans %{hours}h%{minutes} - heure du serveur : %{time}"
+      detailed_view_title: "Détail des heures par jour"
       weekdays:
         - lun
         - mar

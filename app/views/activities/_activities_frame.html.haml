@@ -7,19 +7,19 @@
 
   .flex.border-3.items-center.w-full.md:w-fit
     = link_to activities_path(date: @activity.started_at.to_date - 1.week), class: "tooltip py-3! px-2! w-full md:w-fit" do
-      = lucide_icon "chevrons-left"
+      = lucide_icon "chevrons-left", class: "mx-auto"
       %span.tooltiptext= t(".prev_week")
     = link_to activities_path(date: @activity.started_at.to_date - 1.day), class: "tooltip py-3! px-2! w-full md:w-fit" do
-      = lucide_icon "chevron-left"
+      = lucide_icon "chevron-left", class: "mx-auto"
       %span.tooltiptext= t(".prev_day")
     = link_to activities_path, class: "tooltip py-3! px-2! w-full md:w-fit" do
-      = lucide_icon "arrow-down"
+      = lucide_icon "arrow-down", class: "mx-auto"
       %span.tooltiptext= t(".today")
     = link_to activities_path(date: @activity.started_at.to_date + 1.day), class: "tooltip py-3! px-2! w-full md:w-fit #{'disabled' if @activity.started_at.to_date + 1.day > Date.current}" do
-      = lucide_icon "chevron-right"
+      = lucide_icon "chevron-right", class: "mx-auto"
       %span.tooltiptext= t(".next_day")
     = link_to activities_path(date: @activity.started_at.to_date + 1.week), class: "tooltip py-3! px-2! w-full md:w-fit #{'disabled' if @activity.started_at.to_date + 1.week > Date.current}" do
-      = lucide_icon "chevrons-right"
+      = lucide_icon "chevrons-right", class: "mx-auto"
       %span.tooltiptext= t(".next_week")
 
 .space-y-6

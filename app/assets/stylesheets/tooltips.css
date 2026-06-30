@@ -2,7 +2,6 @@
 .tooltip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
 
 /* Tooltip text */
@@ -37,11 +36,19 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent #555 transparent;
+  border-color: transparent transparent var(--color-text) transparent;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
+/* Default: pure-CSS hover (used wherever the tooltip isn't clipped). */
 .tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* JS-driven: the tooltip_controller switches the text to `position: fixed`
+   (set inline) so it escapes an ancestor's overflow-hidden, e.g. the
+   calendar's collapsible rows. */
+.tooltip .tooltiptext.tooltiptext--visible {
   visibility: visible;
   opacity: 1;
 }

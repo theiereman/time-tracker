@@ -3,6 +3,9 @@
 # Application strings live in the per-domain files alongside this one.
 ---
 fr:
+  common:
+    from: "de"
+    to: "à"
   activerecord:
     errors:
       messages:
