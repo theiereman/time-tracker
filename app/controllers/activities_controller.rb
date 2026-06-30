@@ -3,7 +3,6 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [ :destroy ]
 
   def index
-    view_context.content_for :title, t("activities.index.title")
     @date = @activity.started_at.to_date
     @feed = ProgressPresenter.new(User::Progress.for_the_day(Current.user, @date))
   end
@@ -19,9 +18,8 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
-    date = @activity.started_at.to_date
     @activity.destroy
-    redirect_to activities_path(date: date)
+    redirect_to activities_path(datetime: @activity.started_at)
   end
 
   def mark_night_as_sleep
@@ -37,7 +35,7 @@ class ActivitiesController < ApplicationController
     if @error
       render turbo_stream: helpers.turbo_flash_toast(:alert, @activity.errors.full_messages.first)
     else
-      redirect_to activities_path(date: @date)
+      redirect_to activities_path(datetime: Current.user.wake_up_datetime(date: @date))
     end
   end
 
@@ -54,17 +52,14 @@ class ActivitiesController < ApplicationController
   end
 
   def get_most_accurate_activity_datetime
-    last_activity = Current.user.last_activity
-    last_activity_datetime = last_activity&.ended_at if last_activity&.ended_at&.to_date&.<=(Date.current)
-    date = params.dig(:activity, :started_at) ||
-    params[:datetime] ||
-    !params[:date].nil? && Current.user.wake_up_datetime(date: params[:date].to_date) ||
-    last_activity_datetime||
-    Current.user.wake_up_datetime(date: Date.current)
+    datetime = params.dig(:activity, :started_at) ||
+                params[:datetime] ||
+                params[:date].present? && params[:date].to_date.beginning_of_day ||
+                Current.user.last_activity(Date.current)&.ended_at ||
+                Time.current
 
-    redirect_back fallback_location: root_path and return if date.to_date > Date.current
-
-    date
+    return Time.current if datetime.to_date > Date.current
+    datetime
   end
 
   def activity_params
