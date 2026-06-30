@@ -1,6 +1,6 @@
-= content_for :title, "Mon compte"
+= content_for :title, t(".title")
 
-%h1.mb-12 Mon compte
+%h1.mb-12= t(".title")
 
 %h3= @user.email_address
-= button_to "Se déconnecter", session_path, method: :delete, class: "bg-red-400 text-red-900"
+= button_to t(".sign_out"), session_path, method: :delete, class: "bg-red-400 text-red-900"

@@ -1,0 +1,10 @@
+en:
+  accounts:
+    show:
+      title: My account
+      sign_out: Sign out
+fr:
+  accounts:
+    show:
+      title: Mon compte
+      sign_out: Se déconnecter

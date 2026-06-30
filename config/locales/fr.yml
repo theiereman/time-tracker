@@ -1,3 +1,6 @@
+# Rails framework defaults for French (date/time/number formats, validation
+# messages, etc.). English framework strings ship with Rails by default.
+# Application strings live in the per-domain files alongside this one.
 ---
 fr:
   activerecord:

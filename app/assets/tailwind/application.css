@@ -51,6 +51,7 @@ a {
   }
 }
 
+select,
 input:not([type="submit"]) {
   @apply border-3 border-text bg-white py-1 px-3 focus:outline-none focus:border-3 focus:border-primary;
 }

@@ -1,0 +1,42 @@
+en:
+  activities:
+    index:
+      title: Activities
+    activities_frame:
+      prompt: What did you do on...
+      time_range: "from %{from}h to %{to}h"
+      prev_week: Previous week
+      prev_day: Previous day
+      today: Today
+      next_day: Next day
+      next_week: Next week
+      daily_activities: Today's activities
+      remaining:
+        zero: All activities for the day have been filled in
+        one: "%{count} activity left to fill in"
+        other: "%{count} activities left to fill in"
+      mark_night_as_sleep: 'Mark the night as "Sleep"'
+    slot:
+      empty: Not filled in
+      hour: "%{hour} h"
+fr:
+  activities:
+    index:
+      title: Activités
+    activities_frame:
+      prompt: Qu'avez-vous fait le...
+      time_range: "de %{from}h à %{to}h"
+      prev_week: Semaine précédente
+      prev_day: Jour précédent
+      today: Aujourd'hui
+      next_day: Jour suivant
+      next_week: Semaine suivante
+      daily_activities: Activités de la journée
+      remaining:
+        zero: Toutes les activités du jour ont été renseignées
+        one: "%{count} activité à renseigner"
+        other: "%{count} activités à renseigner"
+      mark_night_as_sleep: 'Marquer la nuit en "Sommeil"'
+    slot:
+      empty: Non renseigné
+      hour: "%{hour} h"

@@ -3,6 +3,8 @@ class MagicLinkMailer < ApplicationMailer
     @magic_link = magic_link
     @user = magic_link.user
 
-    mail to: @user.email_address, subject: "Your Time Tracker code is #{@magic_link.code}"
+    I18n.with_locale(@user.locale.presence || I18n.default_locale) do
+      mail to: @user.email_address, subject: default_i18n_subject(code: @magic_link.code)
+    end
   end
 end

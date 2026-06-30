@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [ :destroy ]
 
   def index
-    view_context.content_for :title, "Test"
+    view_context.content_for :title, t("activities.index.title")
     @date = @activity.started_at.to_date
     @feed = ProgressPresenter.new(User::Progress.for_the_day(Current.user, @date))
   end

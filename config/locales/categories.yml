@@ -1,0 +1,33 @@
+# Default category labels (seeded at user creation) and category flash messages.
+en:
+  activity:
+    category:
+      defaults:
+        reading: Reading
+        cooking: Cooking
+        leisure: Leisure
+        outings: Outings
+        work: Work
+        sleep: Sleep
+    categories:
+      flash:
+        created: Category created
+        updated: Categories updated
+        destroyed: Category deleted
+        destroy_failed: This category cannot be deleted
+fr:
+  activity:
+    category:
+      defaults:
+        reading: Lecture
+        cooking: Cuisine
+        leisure: Loisirs
+        outings: Sorties
+        work: Travail
+        sleep: Sommeil
+    categories:
+      flash:
+        created: Catégorie créée
+        updated: Catégories mises à jour
+        destroyed: Catégorie supprimée
+        destroy_failed: Impossible de supprimer cette catégorie

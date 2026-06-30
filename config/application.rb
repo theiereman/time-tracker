@@ -22,5 +22,10 @@ module TimeTracker
     # in config/environments, which are processed later.
     #
     config.time_zone = "Europe/Paris"
+
+    # Internationalization: English and French, English as the default.
+    config.i18n.available_locales = %i[en fr]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
   end
 end

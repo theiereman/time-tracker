@@ -1,7 +1,7 @@
-= content_for :title, "Paramètres"
+= content_for :title, t(".title")
 
-%h1 Paramètres
-%p.mt-2.font-normal{class: "text-text/60"} Ajustez vos paramètres selon vos habitudes
+%h1= t(".title")
+%p.mt-2.font-normal{class: "text-text/60"}= t(".subtitle")
 
 .mt-10
   = render "form", user: @user

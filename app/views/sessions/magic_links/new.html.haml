@@ -1,15 +1,15 @@
 .border-5.p-6
   = form_with url: session_magic_link_path, method: :post, class: "flex flex-col gap-8 items-center text-center" do |form|
     %div
-      %h2 Vérification
+      %h2= t(".heading")
       %p.mt-2.font-normal.normal-case{class: "text-text/60"}
-        Code envoyé à
+        = t(".code_sent_to")
         %strong.text-text= email_address_pending_authentication
 
     .flex.flex-col.items-center.gap-1
-      = form.label :code, "Code à 6 chiffres"
+      = form.label :code, t(".code_label")
       = form.text_field :code, required: true, autofocus: true, autocomplete: "one-time-code", inputmode: "text", maxlength: MagicLink::CODE_LENGTH, class: "text-center text-3xl tracking-widest w-48 font-extrabold"
 
     .flex.flex-col.items-center.gap-4
-      = form.submit "Se connecter", class: "bg-primary!"
-      = link_to "← Retour", new_session_path, class: "text-sm! normal-case! font-normal! py-0! px-0! text-text/50 hover:text-text! hover:bg-transparent!"
+      = form.submit t(".submit"), class: "bg-primary!"
+      = link_to t(".back"), new_session_path, class: "text-sm! normal-case! font-normal! py-0! px-0! text-text/50 hover:text-text! hover:bg-transparent!"
