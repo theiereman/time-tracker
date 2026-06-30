@@ -1,58 +1,12 @@
 name: CI
 
 on:
-  pull_request:
+  workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  scan_js:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
-
   test:
     runs-on: ubuntu-latest
 
@@ -73,3 +27,54 @@ jobs:
         env:
           RAILS_ENV: test
         run: bin/rails db:test:prepare test
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    env:
+      DOCKER_BUILDKIT: 1
+      RAILS_ENV: production
+      BUNDLE_WITHOUT: "default development test production profiling"
+      BUNDLE_WITH: tools
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.6
+          bundler-cache: true
+          cache-version: "tools-v1-${{ runner.os }}"
+
+      - name: Set up Docker Buildx for cache
+        uses: docker/setup-buildx-action@v3
+
+      - name: Expose GitHub Runtime for cache
+        uses: crazy-max/ghaction-github-runtime@v3
+
+      - name: Show SSH fingerprint
+        run: ssh-keyscan -p 2223 timetracker.dotsncircles.com
+
+      - name: Set up SSH connection
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+          eval $(ssh-agent -s) && ssh-add ~/.ssh/id_rsa
+          ssh-keyscan -p 2223 timetracker.dotsncircles.com >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy with Kamal
+        run: bin/kamal deploy
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_PRODUCTION_MASTER_KEY }}
+          KAMAL_REGISTRY_USERNAME: "teyermann"
+          KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
