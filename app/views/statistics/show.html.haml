@@ -8,7 +8,7 @@
       = t(".share")
 
 %h2= t(".activities_per_category")
-.my-6= column_chart @count_per_category, legend: :bottom, library: { grouped: false, scales: { x: { ticks: { display: false } } } }
+.my-6= column_chart @count_per_category, legend: :bottom, library: { grouped: false, scales: { x: { ticks: { display: false } } }, interaction: { mode: "nearest", intersect: true } }
 
 .overflow-x-auto.mb-12
   %table.w-full.text-sm
