@@ -2,6 +2,7 @@ en:
   statistics:
     show:
       title: Statistics
+      share: Share
       activities_per_category: Number of activities per category
       activities_over_time: Activities over time
       activities_over_time_per_category: Activities over time by category
@@ -13,6 +14,7 @@ fr:
   statistics:
     show:
       title: Statistiques
+      share: Partager
       activities_per_category: Nombre d'activités par catégorie
       activities_over_time: Activités au cours du temps
       activities_over_time_per_category: Activités au cours du temps par catégorie

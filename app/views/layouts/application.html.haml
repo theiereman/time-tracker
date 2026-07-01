@@ -1,24 +1,9 @@
 !!!
 %html
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title= content_for(:title) ? "#{content_for(:title)} - Time Tracker" : "Time Tracker"
-    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
-    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
-    %meta{:content => "yes", :name => "mobile-web-app-capable"}/
-    %meta{:content => "morph", :name => "turbo-refresh-method"}/
-    %meta{:content => "preserve", :name => "turbo-refresh-scroll"}/
-    %meta{:content => "no-cache", :name => "turbo-cache-control"}/
-    = csrf_meta_tags
-    = csp_meta_tag
-    = yield :head
-    %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
-    %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
-    %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
-    = stylesheet_link_tag :app, "data-turbo-track": "reload"
-    = javascript_importmap_tags
+  %head= render "layouts/head"
   %body.h-screen.flex.flex-col.md:flex-row{data: {nav_index: current_nav_index}}
     = flash_toasts
+    = turbo_frame_tag :modals
     .hidden.md:block= render "nav/sidebar"
     .w-full.overflow-y-scroll.flex-1.page-content
       .p-6.max-w-4xl.mx-auto

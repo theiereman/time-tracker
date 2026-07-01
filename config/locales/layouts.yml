@@ -4,9 +4,15 @@ en:
       brand_top: life
       brand_bottom: tracker
       tagline: who thought you'd be your own big brother?
+    public:
+      cta: Like what you see? Track your own time too.
+      sign_in: Sign in / Sign up
 fr:
   layouts:
     sessions:
       brand_top: life
       brand_bottom: tracker
       tagline: who thought you'd be your own big brother?
+    public:
+      cta: Envie de suivre votre temps aussi ?
+      sign_in: Se connecter / S'inscrire

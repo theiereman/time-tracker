@@ -1,6 +1,11 @@
 = content_for :title, t(".title")
 
-%h1.mb-12= t(".title")
+.sticky.flex.items-center.justify-between.mb-12
+  %h1= t(".title")
+  - if @shareable
+    = button_to user_profile_link_path, class: "flex gap-2 items-center" do
+      = lucide_icon "share-2", class: "size-4"
+      = t(".share")
 
 %h2= t(".activities_per_category")
 .my-6= column_chart @count_per_category, legend: :bottom, library: { grouped: false, scales: { x: { ticks: { display: false } } } }

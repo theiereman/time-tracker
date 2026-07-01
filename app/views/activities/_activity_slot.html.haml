@@ -10,6 +10,6 @@
     .overflow-hidden.text-ellipsis.line-clamp-1= slot.label
   .flex.items-center.gap-1
     = link_to activities_path(datetime: slot.activity&.started_at || slot.starts_at, activity_id: slot.activity&.id), class: "p-2!", data: ({ same_item: true } if current) do
-      = lucide_icon :edit, class: "size-5"
+      = lucide_icon :pencil, class: "size-5"
     = button_to activity_path(slot&.activity || 0), method: :delete, class: "p-2! #{"text-gray-200! hover:bg-transparent! cursor-default! pointer-events-none" if !slot.filled?}" do
       = lucide_icon "trash-2", class: "size-5"

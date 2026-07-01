@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_23_070503) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_01_132520) do
   create_table "activities", force: :cascade do |t|
     t.datetime "started_at"
     t.datetime "ended_at"
@@ -53,6 +53,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_23_070503) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "user_profile_links", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_user_profile_links_on_token", unique: true
+    t.index ["user_id"], name: "index_user_profile_links_on_user_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "name"
@@ -67,4 +76,5 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_23_070503) do
   add_foreign_key "activity_categories", "users"
   add_foreign_key "magic_links", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "user_profile_links", "users"
 end

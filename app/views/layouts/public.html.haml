@@ -1,0 +1,11 @@
+!!!
+%html
+  %head= render "layouts/head"
+  %body.h-screen.overflow-y-scroll
+    = flash_toasts
+    %header.flex.flex-col.gap-3.border-b-5.p-4{ class: "sm:flex-row sm:items-center sm:justify-between" }
+      .flex.flex-col.gap-1{ class: "sm:flex-row sm:items-center sm:gap-4" }
+        %p.font-normal.normal-case{ class: "text-text/60" }= t("layouts.public.cta")
+        = link_to t("layouts.public.sign_in"), new_session_path, class: "bg-primary! text-center"
+    .p-6.max-w-4xl.mx-auto
+      = yield

@@ -1,9 +1,8 @@
 class StatisticsController < ApplicationController
+  include StatisticsPresentable
+
   def show
-    activities = Current.user.activities
-    presenter = ActivitiesPerCategoryPresenter.new(activities)
-    @count_per_category = presenter.present
-    @top_categories = presenter.top_table
-    @hours_per_category_over_time = HoursPerCategoryPresenter.present(activities)
+    @shareable = true
+    present_statistics_for(Current.user)
   end
 end

@@ -1,0 +1,22 @@
+en:
+  user_profile_links:
+    share_modal:
+      title: Share your statistics
+      close: Close
+      copy: Copy
+      copied: Copied!
+      regenerate: Regenerate link
+      regenerate_confirm: This will invalidate the current link. Continue?
+    errors:
+      token_generation_failed: Couldn't generate a share link right now. Please try again.
+fr:
+  user_profile_links:
+    share_modal:
+      title: Partager vos statistiques
+      close: Fermer
+      copy: Copier
+      copied: Copié !
+      regenerate: Régénérer le lien
+      regenerate_confirm: Cela invalidera le lien actuel. Continuer ?
+    errors:
+      token_generation_failed: Impossible de générer un lien de partage pour le moment. Veuillez réessayer.
