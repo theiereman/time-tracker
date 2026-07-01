@@ -1,7 +1,10 @@
 module ApplicationHelper
-  # Localized display of an hour-of-day (0-23): "1 PM" in :en, "13 h" in :fr.
   def format_hour(hour)
     l(Time.zone.local(2000, 1, 1, hour), format: :hour)
+  end
+
+  def format_time(time)
+    l(time, format: :time_of_day)
   end
 
   def contrasted_text_color(hex_color)

@@ -8,26 +8,26 @@ class ActivitiesPerCategoryPresenter
   end
 
   def present
-    sorted.map { |(label, color), count| { name: label, data: { label => count }, color: color } }
+    sorted.map { |(label, color), hours| { name: label, data: { label => hours }, color: color } }
   end
 
   def top_table(limit: 10)
-    total = sorted.sum { |_, count| count }
-    sorted.first(limit).map do |(label, color), count|
-      { label: label, color: color, count: count, percentage: total > 0 ? (count.to_f / total * 100).round(1) : 0 }
+    total = sorted.sum { |_, hours| hours }
+    sorted.first(limit).map do |(label, color), hours|
+      { label: label, color: color, count: hours, percentage: total > 0 ? (hours.to_f / total * 100).round(1) : 0 }
     end
   end
 
   private
 
   def sorted
-    @sorted ||= count_by_label_and_color.sort_by { |_, count| -count }
+    @sorted ||= hours_by_label_and_color.sort_by { |_, hours| -hours }
   end
 
-  def count_by_label_and_color
+  def hours_by_label_and_color
     @cache ||= @activities
-      .joins(:category)
-      .group("activity_categories.label", "activity_categories.color")
-      .count
+      .includes(:category)
+      .group_by { |a| [ a.category.label, a.category.color ] }
+      .transform_values { |acts| (acts.sum { |a| a.ended_at - a.started_at } / 3600.0).round(2) }
   end
 end

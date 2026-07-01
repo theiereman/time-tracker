@@ -12,6 +12,7 @@ en:
     attributes:
       user:
         email_address: Email address
+        activity_duration_in_minutes: Activity duration (in minutes)
         wake_up_hour: Wake-up time
         sleep_hour: Bedtime
         locale: Language
@@ -45,6 +46,7 @@ fr:
     attributes:
       user:
         email_address: Adresse e-mail
+        activity_duration_in_minutes: Durée d'une activité (en minutes)
         wake_up_hour: Heure de réveil
         sleep_hour: Heure de coucher
         locale: Langue

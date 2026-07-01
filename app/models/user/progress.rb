@@ -14,15 +14,36 @@ class User::Progress
     new(user, date.beginning_of_month.beginning_of_day..date.end_of_month.end_of_day)
   end
 
-  def all_activities_done?(date: nil)
-    return activities.size >= Activity.number_of_activities_in_a_day if date.nil?
-    return false if activities_per_day[date].nil?
+  def date
+    @range.begin.to_date
+  end
 
-    activities_per_day[date].count >= Activity.number_of_activities_in_a_day
+  def slot_count
+    Activity::MINUTES_IN_A_DAY / user.activity_duration_in_minutes
+  end
+
+  def filled_slots_on(day)
+    slots_for(day).count { |_starts_at, activity| activity }
+  end
+
+  def all_activities_done?(date: nil)
+    filled_slots_on(date || self.date) >= slot_count
   end
 
   def remaining_activities_count(date:)
-    [ Activity.number_of_activities_in_a_day - activities.select { it.started_at.between?(date.beginning_of_day, date.end_of_day) }.size, 0 ].max
+    [ slot_count - filled_slots_on(date), 0 ].max
+  end
+
+  def slots_for(day)
+    duration = user.activity_duration_in_minutes
+    day_start = Time.zone.local(day.year, day.month, day.day)
+    acts = activities_per_day[day] || []
+
+    (0...(Activity::MINUTES_IN_A_DAY / duration)).map do |i|
+      starts_at = day_start + (i * duration).minutes
+      activity = acts.find { |a| a.started_at <= starts_at && a.ended_at > starts_at }
+      [ starts_at, activity ]
+    end
   end
 
   def activities_per_day

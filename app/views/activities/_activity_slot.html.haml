@@ -1,16 +1,16 @@
 -# locals: (slot:, activity:, date:)
 
-- slot_color = slot.filled? && slot.hour != activity.started_at.hour ? slot.activity.category.color : nil
-.relative.flex.gap-6.justify-between.p-4.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"bg-primary text-text!" if slot.hour == activity.started_at.hour}", style: [("background-color: #{slot_color}" if slot_color), ("color: #{contrasted_text_color(slot_color)}" if slot_color)].compact.join("; ")}
+- slot_color = slot.filled? && slot.starts_at != activity.started_at ? slot.activity.category.color : nil
+.relative.flex.gap-6.justify-between.p-4.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"bg-primary text-text!" if slot.starts_at == activity.started_at}", style: [("background-color: #{slot_color}" if slot_color), ("color: #{contrasted_text_color(slot_color)}" if slot_color)].compact.join("; ")}
   - unless slot.filled?
     .absolute.animate-pulse.size-2.rounded-full.bg-red-500{class: "-left-3.5"}
   .font-bold.text-nowrap.flex.gap-2
-    %span= format_hour(slot.hour)
+    %span= format_time(slot.starts_at)
     = lucide_icon :sun
   .flex.justify-between.items-center.md:text-xl.text-ellipsis{class: ("italic" unless slot.filled?)}
     %span= slot.label
   .flex.items-center.gap-1
-    = link_to activities_path(datetime: Time.zone.local(date.year, date.month, date.day, slot.hour), activity_id: slot.activity&.id), class: "p-2!" do
+    = link_to activities_path(datetime: slot.activity&.started_at || slot.starts_at, activity_id: slot.activity&.id), class: "p-2!" do
       = lucide_icon :edit
     = button_to activity_path(slot&.activity || 0), method: :delete, class: "p-2! text-red-600 #{"text-gray-200! hover:bg-transparent! cursor-default! pointer-events-none" if !slot.filled?}" do
       = lucide_icon "trash-2"

@@ -42,6 +42,10 @@ bin/jobs
 
 CI (`.github/workflows/ci.yml`) runs, in order: `brakeman`, `bin/importmap audit`, `bin/rubocop`, then `bin/rails test` + `bin/rails test:system`.
 
+## Code style
+
+Do **not** add comments above methods. If a method can't be understood without a comment, make the code itself explicit (clear naming, extraction into a well-named private method) instead of adding a comment.
+
 ## Architecture
 
 ### Authentication
@@ -56,12 +60,12 @@ Non-obvious auth details:
 
 ### Data model
 - **User** — stores `settings` as JSON (via `store`); `wake_up_hour` and `sleep_hour` come from `User::Setupable`
-- **Activity** — one hour fixed-duration slots, snapped to the start of the hour. A user can have at most 24 activities per day (one per hour). The "sleep" category is protected and cannot be deleted or renamed. `ActivitiesController#mark_night_as_sleep` bulk-creates activities for all of a user's sleep hours on a date and assigns them to the protected "Sommeil" category.
+- **Activity** — fixed-duration slots whose length comes from the user's `activity_duration_in_minutes` setting (15/30/60, via `User::Setupable`); `started_at` is snapped to the slot grid (`User#snap_to_activity_slot`) and `ended_at` derived from the duration. Activities store real `started_at`/`ended_at` intervals, so changing the setting never rewrites existing records. Day completion is measured in **filled slots on the current grid** (an activity fills a slot when it covers that slot's start), so it always matches what the day view shows; statistics still sum the real durations. Assigning a slot **absorbs** (destroys) any activity it overlaps (`ActivitiesController#absorb_overlapping_activities`), and uniqueness is a real interval-overlap check (`Activity.overlapping`), so a coarser slot cleanly replaces finer ones. The "sleep" category is protected and cannot be deleted or renamed. `ActivitiesController#mark_night_as_sleep` bulk-creates activities covering all of a user's sleep hours on a date and assigns them to the protected "Sommeil" category.
 - **Activity::Category** — per-user, created with defaults on user creation. `protected: true` means immutable label/color and indestructible.
 
 ### Key non-obvious patterns
 - **`User::Progress`** — query object scoped to a date range; used by both the day view (via `ProgressPresenter`) and the calendar view (via `MonthlyCalendar`). Call `User::Progress.for_the_day(user, date)` or `.for_the_month(...)`.
-- **`ProgressPresenter`** — wraps a `User::Progress` and builds 24 `Slot` structs (one per hour) for the activity feed. Slots carry `:hour`, `:activity`, and `:night` (bool, based on `wake_up_hour`/`sleep_hour`).
+- **`ProgressPresenter`** — wraps a `User::Progress` and builds one `Slot` per slot of the day (`1440 / activity_duration_in_minutes`) via `Progress#slots_for`. Slots carry `:starts_at`, `:activity`, and `:night` (bool, based on `wake_up_hour`/`sleep_hour`); an activity fills every slot its interval covers, so a 1 h block spans four 15-minute slots.
 - **`Day` / `MonthlyCalendar`** — plain Ruby objects for the calendar view; no ActiveRecord.
 - **Presenters** live in `app/presenters/` and are plain Ruby objects — not view helpers. The statistics view uses `ActivitiesPerCategoryPresenter` (counts + top-categories table) and `HoursPerCategoryPresenter` (time-series for Chartkick).
 - **Helpers** — `NavigationHelper` builds the nav items and resolves the active one via `Current.path`; `ApplicationHelper` has `contrasted_text_color` and `darken_color` for category-color UI.
@@ -84,11 +88,11 @@ Errors are shown via `helpers.turbo_flash_toast(:alert, message)` which renders 
 ### Stimulus controllers
 Minimal — in `app/javascript/controllers/`: `autosubmit_controller.js`, `element_removal_controller.js`, and `press_controller.js` (button press scale/brightness animation).
 
-### HAML + Tailwind classes avec `/`
-Les classes Tailwind contenant `/` (ex. `text-text/60`, `bg-primary/50`) ne peuvent **pas** être utilisées dans la notation pointée HAML (`.text-text/60` est invalide). Il faut toujours les mettre dans un attribut `{class: "..."}` :
+### HAML + Tailwind classes with `/`
+Tailwind classes containing `/` (e.g. `text-text/60`, `bg-primary/50`) **cannot** be used in HAML's dot notation (`.text-text/60` is invalid). Always put them in a `{class: "..."}` attribute:
 
 ```haml
--# ❌ invalide
+-# ❌ invalid
 %p.text-text/60
 
 -# ✅ correct

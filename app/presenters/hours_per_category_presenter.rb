@@ -11,13 +11,19 @@ class HoursPerCategoryPresenter
     hours_by_category_and_date.map do |category, data|
       {
         name: category.label,
-        data: all_dates.index_with { |d| data[d]&.size || 0 },
+        data: all_dates.index_with { |d| hours_for(data[d]) },
         color: category.color
       }
     end
   end
 
   private
+
+  def hours_for(acts)
+    return 0 if acts.nil?
+
+    (acts.sum { |a| a.ended_at - a.started_at } / 3600.0).round(2)
+  end
 
   def all_dates
     hours_by_category_and_date.values.flat_map(&:keys).uniq.sort

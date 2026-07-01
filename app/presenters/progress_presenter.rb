@@ -1,7 +1,8 @@
 class ProgressPresenter
   delegate_missing_to :@user
 
-  Slot = Data.define(:hour, :activity, :night) do
+  Slot = Data.define(:starts_at, :activity, :night) do
+    def hour = starts_at.hour
     def filled? = activity.present?
     def label = filled? ? activity.category.label : I18n.t("activities.slot.empty")
   end
@@ -11,10 +12,8 @@ class ProgressPresenter
   end
 
   def slots
-    activities_by_hour = @user.activities.index_by { |activity| activity.started_at.hour }
-
-    (0..23).map do |hour|
-      Slot.new(hour: hour, activity: activities_by_hour[hour], night: !hour.between?(user.wake_up_hour, user.sleep_hour))
+    @user.slots_for(@user.date).map do |starts_at, activity|
+      Slot.new(starts_at: starts_at, activity: activity, night: user.night?(starts_at.hour))
     end
   end
 

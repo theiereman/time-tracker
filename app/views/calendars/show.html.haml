@@ -25,14 +25,12 @@
   .flex.flex-col.w-full{class: "min-h-[600px]"}
     - activities = User::Progress.for_the_month(Current.user, @calendar.date)
     - @calendar.days.each do |day|
-      - activities_for_day = activities.activities_per_day[day.date]
       .flex.h-5.items-center.text-sm.transition-all.overflow-hidden{id: day.date.day, data: {"calendar-date-hover-target": "line"}, class: "first:[&_#activities]:border-t last:[&_#activities]:border-b"}
         .w-8.font-semibold= day.date.day
         #activities.flex.flex-1.justify-stretch.border-x.h-full
-          - Activity.number_of_activities_in_a_day.times do |i|
-            - activity = activities_for_day&.find { it.started_at.hour == i }
+          - activities.slots_for(day.date).each do |starts_at, activity|
             .w-full.tooltip{style: "background-color: #{activity&.category&.color}", data: {action: "mouseover->tooltip#show mouseout->tooltip#hide"}}
               - if activity
-                %span.tooltiptext= "#{activity&.category&.label} #{t("common.from")} #{format_hour(activity&.started_at.hour)} #{t("common.to")} #{format_hour(activity&.ended_at.hour)}"
+                %span.tooltiptext= "#{activity.category.label} #{t("common.from")} #{format_time(activity.started_at)} #{t("common.to")} #{format_time(activity.ended_at)}"
 
-        .w-12.text-end.font-thin= number_to_percentage(((activities_for_day&.size || 0).to_f / Activity.number_of_activities_in_a_day) * 100, precision: 0)
+        .w-12.text-end.font-thin= number_to_percentage(day.percentage_done, precision: 0)
