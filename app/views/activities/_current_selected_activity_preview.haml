@@ -1,0 +1,9 @@
+-# locals: (current_timestamp:, slots:)
+
+- previous_slot = slots.find { it.starts_at == current_timestamp - Current.user.activity_duration_in_minutes.minutes }
+- next_slot = slots.find { it.starts_at == current_timestamp + Current.user.activity_duration_in_minutes.minutes }
+
+%div.linear-preview{style: "view-transition-name: linear-preview"}
+  = render "activity_slot", slot: previous_slot, animated: true, dimmed: true if previous_slot.present?
+  = render "activity_slot", slot: slots.find { it.starts_at == current_timestamp }, current_timestamp:, animated: true
+  = render "activity_slot", slot: next_slot, animated: true, dimmed: true if next_slot.present?

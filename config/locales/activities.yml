@@ -16,6 +16,8 @@ en:
         one: "%{count} activity left to fill in"
         other: "%{count} activities left to fill in"
       mark_night_as_sleep: 'Mark the night as "Sleep"'
+    linear_activity_preview:
+      title: Right now
     slot:
       empty: Not filled in
 fr:
@@ -36,5 +38,7 @@ fr:
         one: "%{count} activité à renseigner"
         other: "%{count} activités à renseigner"
       mark_night_as_sleep: 'Marquer la nuit en "Sommeil"'
+    linear_activity_preview:
+      title: En ce moment
     slot:
       empty: Non renseigné

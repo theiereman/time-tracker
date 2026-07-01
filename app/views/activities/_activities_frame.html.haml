@@ -1,26 +1,10 @@
-.flex.flex-col.gap-4.justify-between.items-start.mb-10
+.flex.flex-col.gap-6.justify-between.items-start.mb-10
   %div
     %span= t(".prompt")
     .flex.flex-col.lg:flex-row.lg:gap-4.lg:items-end
       %h1= l(@date, format: :long)
       %h2= t(".time_range", from: format_time(@activity.started_at), to: format_time(@activity.ended_at))
-
-  .flex.border-3.items-center.w-full.md:w-fit
-    = link_to activities_path(date: @activity.started_at.to_date - 1.week), class: "tooltip py-3! px-2! w-full md:w-fit" do
-      = lucide_icon "chevrons-left", class: "mx-auto"
-      %span.tooltiptext= t(".prev_week")
-    = link_to activities_path(date: @activity.started_at.to_date - 1.day), class: "tooltip py-3! px-2! w-full md:w-fit" do
-      = lucide_icon "chevron-left", class: "mx-auto"
-      %span.tooltiptext= t(".prev_day")
-    = link_to activities_path, class: "tooltip py-3! px-2! w-full md:w-fit" do
-      = lucide_icon "arrow-down", class: "mx-auto"
-      %span.tooltiptext= t(".today")
-    = link_to activities_path(date: @activity.started_at.to_date + 1.day), class: "tooltip py-3! px-2! w-full md:w-fit #{'disabled' if @activity.started_at.to_date + 1.day > Date.current}" do
-      = lucide_icon "chevron-right", class: "mx-auto"
-      %span.tooltiptext= t(".next_day")
-    = link_to activities_path(date: @activity.started_at.to_date + 1.week), class: "tooltip py-3! px-2! w-full md:w-fit #{'disabled' if @activity.started_at.to_date + 1.week > Date.current}" do
-      = lucide_icon "chevrons-right", class: "mx-auto"
-      %span.tooltiptext= t(".next_week")
+  = render "date_navigation"
 
 .space-y-6
   .grid.grid-cols-2.gap-4.text-lg
@@ -30,6 +14,8 @@
         = form.hidden_field :activity_category_id, value: category.id
         = form.hidden_field :started_at, value: @activity.started_at
         = form.submit category.label, class: "size-full p-2! truncate md:py-4! hover:bg-(--cat-hover)! cursor-pointer", data: { controller: "press", action: "pointerdown->press#press pointerup->press#release pointercancel->press#release pointerleave->press#release" }, style: "background-color: #{category.color}; color: #{contrasted_text_color(category.color)}; border: 5px solid #{darken_color(category.color)}; --cat-hover: #{darken_color(category.color)}"
+
+  .mx-auto= render "current_selected_activity_preview", current_timestamp: @activity.started_at, slots: @feed.slots
 
   .title
     %h2.mt-10.flex.justify-between= t(".daily_activities")
@@ -44,7 +30,7 @@
           %div{class: "absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2/3 opacity-0 group-hover:opacity-100 transition-opacity z-20 whitespace-nowrap"}
             = button_to t(".mark_night_as_sleep"), mark_night_as_sleep_path(date: @date), class: "text-xs px-2 py-0.5 bg-night text-white border border-white/40 cursor-pointer rounded"
           - slots.each do |slot|
-            = render "night_activity_slot", slot: slot, activity: @activity, date: @date
+            = render "activity_slot", slot: slot, current_timestamp: @activity.started_at
       - else
         - slots.each do |slot|
-          = render "activity_slot", slot: slot, activity: @activity, date: @date
+          = render "activity_slot", slot: slot, current_timestamp: @activity.started_at

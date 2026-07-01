@@ -20,7 +20,7 @@
   %body.h-screen.flex.flex-col.md:flex-row{data: {nav_index: current_nav_index}}
     = flash_toasts
     .hidden.md:block= render "nav/sidebar"
-    .w-full.overflow-y-scroll.flex-1{style: "view-transition-name: page-content"}
-      .p-6.max-w-254.mx-auto
+    .w-full.overflow-y-scroll.flex-1.page-content
+      .p-6.max-w-4xl.mx-auto
         = yield
     .md:hidden= render "nav/navbar"

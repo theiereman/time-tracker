@@ -1,0 +1,94 @@
+:root {
+  --slide-direction: 1;
+  --roll-direction: 1;
+}
+
+@keyframes slide-out {
+  to {
+    transform: translateY(calc(-100% * var(--slide-direction)));
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(calc(100% * var(--slide-direction)));
+  }
+}
+
+.page-content {
+  view-transition-name: page-content;
+}
+
+:root:active-view-transition-type(frame-nav) .page-content {
+  view-transition-name: none;
+}
+
+:root:active-view-transition-type(page-nav) .linear-preview,
+:root:active-view-transition-type(page-nav) .linear-slot {
+  view-transition-name: none !important;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  opacity: 0;
+}
+
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-group(*) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root:active-view-transition-type(page-nav)
+  ::view-transition-group(page-content) {
+  overflow: hidden;
+}
+
+:root:active-view-transition-type(page-nav)
+  ::view-transition-old(page-content) {
+  animation: slide-out 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+:root:active-view-transition-type(page-nav)
+  ::view-transition-new(page-content) {
+  animation: slide-in 420ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+::view-transition-group(linear-preview) {
+  overflow: hidden;
+}
+
+::view-transition-group(.linear-slot) {
+  perspective: 300px;
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::view-transition-old(.linear-slot) {
+  transform-origin: top center;
+  animation: roll-up-out 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+::view-transition-new(.linear-slot) {
+  transform-origin: bottom center;
+  animation: roll-up-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes roll-up-out {
+  to {
+    transform: translateY(calc(-60% * var(--roll-direction)))
+      rotateX(calc(70deg * var(--roll-direction)));
+    opacity: 0;
+  }
+}
+
+@keyframes roll-up-in {
+  from {
+    transform: translateY(calc(60% * var(--roll-direction)))
+      rotateX(calc(-70deg * var(--roll-direction)));
+    opacity: 0;
+  }
+}

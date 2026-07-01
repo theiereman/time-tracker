@@ -1,2 +1,2 @@
-= turbo_frame_tag :activities do
+= turbo_frame_tag :activities, data: { current_timestamp: @activity.started_at.to_i } do
   = render partial: "activities_frame"

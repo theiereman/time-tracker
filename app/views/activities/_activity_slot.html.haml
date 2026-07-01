@@ -1,16 +1,15 @@
--# locals: (slot:, activity:, date:)
+-# locals: (slot:, current_timestamp:nil, animated: false, dimmed: false)
 
-- slot_color = slot.filled? && slot.starts_at != activity.started_at ? slot.activity.category.color : nil
-.relative.flex.gap-6.justify-between.p-4.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"bg-primary text-text!" if slot.starts_at == activity.started_at}", style: [("background-color: #{slot_color}" if slot_color), ("color: #{contrasted_text_color(slot_color)}" if slot_color)].compact.join("; ")}
-  - unless slot.filled?
-    .absolute.animate-pulse.size-2.rounded-full.bg-red-500{class: "-left-3.5"}
+- slot_color = slot.filled? ? slot.activity.category.color : nil
+- current = slot.starts_at == current_timestamp
+.relative.flex.gap-6.justify-between.p-4.items-center.py-2.break-inside-avoid{class: "#{"text-text/50" unless slot.filled?} #{"opacity-60" if dimmed} #{"border-3 border-primary scale-105 shadow-lg z-10" if current} #{"linear-slot" if animated}", style: [("background-color: #{slot_color}" if slot_color), ("color: #{contrasted_text_color(slot_color)}" if slot_color), ("view-transition-name: linear-slot-#{slot.starts_at.to_i}; view-transition-class: linear-slot; view-transition-group: nearest" if animated)].compact.join("; ")}
   .font-bold.text-nowrap.flex.gap-2
     %span= format_time(slot.starts_at)
-    = lucide_icon :sun
-  .flex.justify-between.items-center.md:text-xl.text-ellipsis{class: ("italic" unless slot.filled?)}
-    %span= slot.label
+    = lucide_icon slot.night ? :moon : :sun
+  .flex.justify-between.items-center{class: ("italic" unless slot.filled?)}
+    .overflow-hidden.text-ellipsis.line-clamp-1= slot.label
   .flex.items-center.gap-1
-    = link_to activities_path(datetime: slot.activity&.started_at || slot.starts_at, activity_id: slot.activity&.id), class: "p-2!" do
-      = lucide_icon :edit
-    = button_to activity_path(slot&.activity || 0), method: :delete, class: "p-2! text-red-600 #{"text-gray-200! hover:bg-transparent! cursor-default! pointer-events-none" if !slot.filled?}" do
-      = lucide_icon "trash-2"
+    = link_to activities_path(datetime: slot.activity&.started_at || slot.starts_at, activity_id: slot.activity&.id), class: "p-2!", data: ({ same_item: true } if current) do
+      = lucide_icon :edit, class: "size-5"
+    = button_to activity_path(slot&.activity || 0), method: :delete, class: "p-2! #{"text-gray-200! hover:bg-transparent! cursor-default! pointer-events-none" if !slot.filled?}" do
+      = lucide_icon "trash-2", class: "size-5"
